@@ -21,6 +21,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import { useStyles } from "./styles/makeTheme";
 import { Avatar, Menu, MenuItem } from "@mui/material";
 import { Logout, PersonAdd, Settings } from "@mui/icons-material";
+import { AuthenticationService } from "../services/access/AuthenticationService";
+import { Route, Routes } from "react-router-dom";
+import { publicRoutes } from "../routes/routes";
 
 const drawerWidth = 240;
 
@@ -97,7 +100,7 @@ interface Props {
   children: any;
 }
 
-export default function Layout({ children }: Props) {
+export default function Layout() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -123,7 +126,7 @@ export default function Layout({ children }: Props) {
 
   const handleLogout = async () => {
     setAnchorEl(null);
-    // logout();
+    AuthenticationService.logout();
     window.location.href = '/';
   };
 
@@ -282,7 +285,14 @@ export default function Layout({ children }: Props) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader/>
-        {children}
+        <Routes>
+          {
+            publicRoutes.map((route, index) => {
+              const Page = route.component;
+              return <Route key={index} path={route.path} element={<Page/>}/>
+            })
+          }
+        </Routes>
       </Box>
     </Box>
   );

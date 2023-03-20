@@ -10,7 +10,7 @@ export type Response = {
 };
 
 export type loginForm = {
-  userId: string;
+  username: string;
   password: string;
 };
 

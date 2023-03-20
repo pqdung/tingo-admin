@@ -1,32 +1,18 @@
-import { CircularProgress } from '@mui/material';
-import { Box, styled } from '@mui/system';
+import React from 'react'
+import { Backdrop, CircularProgress } from '@mui/material';
+export interface loadingModalProps {
+  open: boolean;
+}
 
-const StyledLoading = styled('div')(() => ({
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  '& img': {
-    width: 'auto',
-    height: '25px',
-  },
-  '& .circleProgress': {
-    position: 'absolute',
-    left: -7,
-    right: 0,
-    top: 'calc(50% - 25px)',
-  },
-}));
+export default function TLoading(props: loadingModalProps) {
+  const { open } = props;
 
-const Loading = () => {
   return (
-    <StyledLoading>
-      <Box position="relative">
-        <CircularProgress className="circleProgress" />
-      </Box>
-    </StyledLoading>
-  );
-};
-
-export default Loading;
+    <div>
+      <Backdrop sx={{ color: '#FFF', zIndex: (theme) => theme.zIndex.modal + 1 }} open={open}>
+        <div style={{ marginRight: "15px" }}>Please wait a moment!</div>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </div>
+  )
+}

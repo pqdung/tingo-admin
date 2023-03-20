@@ -1,29 +1,27 @@
 import * as React from 'react';
 import { useStyles } from "../../layouts/styles/makeTheme";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, TextField } from "@mui/material";
 import { useState } from "react";
 import { onChange } from "../../utils/utils";
-import { loginForm } from "../../models/user-interface";
-import { loginKeyCloakAsync } from "../../store/slices/authSlice";
-import { useAppDispatch } from "../../store/store";
+import { AuthenticationService } from "../../services/access/AuthenticationService";
+import TLoading from "./TLoading";
 
 export function Login(this: any) {
   const classes = useStyles();
   const [values, setValues] = useState({
-    email: '',
+    username: '',
     password: ''
   });
   const [loading, setLoading] = useState(false);
-  const dispatch = useAppDispatch();
 
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const form: loginForm = {
-        userId: values.email,
-        password: values.password,
-      };
-      await dispatch(loginKeyCloakAsync(form));
+      // await dispatch(loginKeyCloakAsync(form));
+      await AuthenticationService.login(values.username, values.password);
+      if (AuthenticationService.isLogin()) {
+        window.location.href = '/';
+      }
     } catch (e) {
       setLoading(false);
     }
@@ -41,10 +39,10 @@ export function Login(this: any) {
               <TextField
                 className={classes.MTextField}
                 required
-                id={"email"}
-                name={"email"}
-                label="Email"
-                placeholder="Please input email"
+                id={"username"}
+                name={"username"}
+                label="User Name"
+                placeholder="Please input User Name"
                 onChange={onChange.bind(this, setValues, values)}
               />
             </Grid>
@@ -72,6 +70,7 @@ export function Login(this: any) {
           </Grid>
         </Grid>
       </Grid>
+      <TLoading open={loading}/>
     </Box>
   );
 }
