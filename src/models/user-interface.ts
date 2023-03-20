@@ -20,3 +20,11 @@ export class KeyCloakError {
     console.log(message);
   }
 }
+
+export interface User {
+  username: string;
+  password: string;
+  fullName: string;
+  accessToken: string;
+  validTo: number;
+}

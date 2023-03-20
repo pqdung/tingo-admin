@@ -1,12 +1,5 @@
 import { objectNullOrEmpty } from "../../utils/utils";
-
-interface User {
-  username: string;
-  password: string;
-  fullName: string;
-  accessToken: string;
-  validTo: number;
-}
+import { User } from "../../models/user-interface";
 
 const lstUserDefault = [
   {
@@ -29,7 +22,7 @@ export const AuthenticationService = {
   isLogin,
   login,
   logout,
-  currentUser: getCurrentUser()
+  getCurrentUser
 };
 
 function getCurrentUser() {

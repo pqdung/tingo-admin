@@ -50,12 +50,21 @@ const useStyles = makeStyles({
   },
   MTextField: {
     margin: '10px !important',
-    // '& .MuiInputBase-root.MuiOutlinedInput-root': {
-    //   height: '40px !important',
-    // }
   },
   MButton: {
     margin: '10px !important',
+  },
+  MTextValidate: {
+    margin: '0 10px !important',
+    color: 'red',
+    fontSize: 'small',
+    fontStyle: 'italic',
+  },
+  MWarning: {
+    width: '16px',
+    height: '16px',
+    margin: '-2px 5px !important',
+    display: 'inline-block',
   }
 });
 

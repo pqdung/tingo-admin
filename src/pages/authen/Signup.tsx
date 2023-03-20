@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { useStyles } from "../../layouts/styles/makeTheme";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { useState } from "react";
-import { objectNullOrEmpty, onChange } from "../../utils/utils";
-import { AuthenticationService } from "../../services/access/AuthenticationService";
 import TLoading from "./TLoading";
 import { useForm } from "react-hook-form";
-import loginLogo from '../../assets/images/loginLogo.svg';
+import registerLogo from '../../assets/images/registerLogo.svg';
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
-export function Login(this: any) {
+export function Signup(this: any) {
   const classes = useStyles();
-  const [errorLogin, setErrorLogin] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -20,38 +17,21 @@ export function Login(this: any) {
     }
   });
 
-  const onHandleLogin = async (data: any) => {
-    setLoading(true);
-    try {
-      // await dispatch(loginKeyCloakAsync(form));
-      await AuthenticationService.login(data.username, data.password);
-      if (AuthenticationService.isLogin()) {
-        setErrorLogin({});
-        window.location.href = '/';
-      } else {
-        errorLogin.isLogin = false;
-        setErrorLogin(errorLogin);
-      }
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-    }
+
+  const onHandleRegister = async (data: any) => {
   };
 
   return (
     <Box className={classes.MLoginWrapper}>
-      <form onSubmit={handleSubmit((data: any) => onHandleLogin(data))}>
+      <form onSubmit={handleSubmit((data: any) => onHandleRegister(data))}>
         <Grid container className={classes.MLoginContainer}>
           <Grid item xs={6} className={classes.MLoginLeft}>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-              <img src={loginLogo} width={320} alt={''}/>
+              <img src={registerLogo} width={320} alt={''}/>
             </Box>
           </Grid>
           <Grid item xs={6} className={classes.MLoginRight} pr={4}>
             <Grid container p={2}>
-              {(!objectNullOrEmpty(errorLogin) && !errorLogin.isLogin) && <div className={classes.MTextValidate}>
-                {'Your username and/or password are incorrect.'}
-              </div>}
               <Grid item xs={12}>
                 <TextField {...register('username', { required: 'Enter username.' })}
                            className={classes.MTextField}
@@ -97,14 +77,14 @@ export function Login(this: any) {
                   variant={'contained'}
                   type={'submit'}
                 >
-                  Login
+                  Register
                 </Button>
               </Grid>
               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                <Typography fontSize={'small'} ml={1} mr={1}>{`Don't have an account?`} </Typography>
-                <NavLink to={'/signup'}>
-                  <Typography fontSize={'small'} >
-                    {'Register'}
+                <Typography fontSize={'small'} ml={1} mr={1}>{`Already have an account?`} </Typography>
+                <NavLink to={'/'}>
+                  <Typography fontSize={'small'}>
+                    {'Login'}
                   </Typography>
                 </NavLink>
               </Grid>

@@ -20,10 +20,16 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { useStyles } from "./styles/makeTheme";
 import { Avatar, Menu, MenuItem } from "@mui/material";
-import { Logout, PersonAdd, Settings } from "@mui/icons-material";
+import { Logout, Person, Settings } from "@mui/icons-material";
 import { AuthenticationService } from "../services/access/AuthenticationService";
-import { Route, Routes } from "react-router-dom";
-import { publicRoutes } from "../routes/routes";
+import { objectNullOrEmpty } from "../utils/utils";
+import { User } from "../models/user-interface";
+import { useEffect, useState } from "react";
+import TLoading from "../pages/authen/TLoading";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import enLocale from '../assets/images/enLocale.png';
+import zhLocale from '../assets/images/zhLocale.png';
 
 const drawerWidth = 240;
 
@@ -96,17 +102,45 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const lstLocale = [
+  {
+    prefix: 'en',
+    imgUrl: enLocale,
+    name: 'English',
+  },
+  {
+    prefix: 'zh',
+    imgUrl: zhLocale,
+    name: 'Hong Kong',
+  }
+];
+
 interface Props {
   children: any;
 }
 
-export default function Layout() {
+export default function Layout({ children }: Props) {
   const classes = useStyles();
+  const { t } = useTranslation(['common']);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElLocale, setAnchorElLocale] = React.useState<null | HTMLElement>(null);
+  const openUserMenu = Boolean(anchorElUser);
+  const openLocaleMenu = Boolean(anchorElLocale);
+  const [currentLocate, setCurrentLocate] = useState<any>({});
+  const [lstLocateChange, setLstLocateChange] = useState<object[]>([]);
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const openUserMenu = Boolean(anchorEl);
+  useEffect(() => {
+    if (i18n.language) {
+      const locate: any = lstLocale.find((it: any) => it.prefix === i18n.language);
+      if (!objectNullOrEmpty(locate)) {
+        setCurrentLocate(locate);
+      }
+      setLstLocateChange(lstLocale.filter((it: any) => it.prefix !== i18n.language));
+    }
+  }, [i18n.language]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -117,18 +151,40 @@ export default function Layout() {
   };
 
   const handleUserMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorElUser(event.currentTarget);
   }
 
   const handleUserMenuClose = () => {
-    setAnchorEl(null);
+    setAnchorElUser(null);
+  };
+
+  const handleLocaleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElLocale(event.currentTarget);
+  }
+
+  const handleLocaleMenuClose = () => {
+    setAnchorElLocale(null);
   };
 
   const handleLogout = async () => {
-    setAnchorEl(null);
+    setAnchorElUser(null);
+    setLoading(true);
     AuthenticationService.logout();
     window.location.href = '/';
+    setLoading(false);
   };
+
+  const genCurrentUserName = () => {
+    const currentUser: User = AuthenticationService.getCurrentUser();
+    if (objectNullOrEmpty(currentUser)) {
+      return '';
+    }
+    return currentUser.fullName;
+  };
+
+  const onChangeLanguage = (value: string) => {
+    i18n.changeLanguage(value);
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -151,7 +207,67 @@ export default function Layout() {
             Tingo
           </Typography>
           <div className={classes.MTopBarUser}>
-            Hi <Typography><b>{'Tingo'}</b></Typography>
+            <IconButton
+              onClick={handleLocaleMenuOpen}
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={openLocaleMenu ? 'account-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={openLocaleMenu ? 'true' : undefined}
+            >
+              <Avatar alt='' src={objectNullOrEmpty(currentLocate) ? '' : currentLocate.imgUrl}/>
+            </IconButton>
+            <Menu
+              anchorEl={anchorElLocale}
+              id="account-menu"
+              open={openLocaleMenu}
+              onClose={handleLocaleMenuClose}
+              onClick={handleLocaleMenuClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+                  '& .MuiAvatar-root': {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  '&:before': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: 'background.paper',
+                    transform: 'translateY(-50%) rotate(45deg)',
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            >
+              {
+                lstLocateChange && lstLocateChange.length > 0 &&
+                (
+                  lstLocateChange.map((it: any) => {
+                    return <MenuItem onClick={() => onChangeLanguage(it.prefix)}>
+                      <IconButton
+                        size="small"
+                      >
+                        <Avatar alt='' src={it.imgUrl}/>
+                      </IconButton>
+                      {it.name}
+                    </MenuItem>
+                  })
+                )
+              }
+            </Menu>
             <IconButton
               onClick={handleUserMenuOpen}
               size="small"
@@ -160,10 +276,10 @@ export default function Layout() {
               aria-haspopup="true"
               aria-expanded={openUserMenu ? 'true' : undefined}
             >
-              <Avatar alt="Tingo" src={''}/>
+              <Avatar alt='' src={''}/>
             </IconButton>
             <Menu
-              anchorEl={anchorEl}
+              anchorEl={anchorElUser}
               id="account-menu"
               open={openUserMenu}
               onClose={handleUserMenuClose}
@@ -198,29 +314,26 @@ export default function Layout() {
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
               <MenuItem onClick={handleUserMenuClose}>
-                <Avatar/> Profile
-              </MenuItem>
-              <MenuItem onClick={handleUserMenuClose}>
-                <Avatar/> My account
+                {t('hi')}&nbsp;<Typography><b>{genCurrentUserName()}</b></Typography>
               </MenuItem>
               <Divider/>
               <MenuItem onClick={handleUserMenuClose}>
                 <ListItemIcon>
-                  <PersonAdd fontSize="small"/>
+                  <Person fontSize="small"/>
                 </ListItemIcon>
-                Add another account
+                {t('profile')}
               </MenuItem>
               <MenuItem onClick={handleUserMenuClose}>
                 <ListItemIcon>
                   <Settings fontSize="small"/>
                 </ListItemIcon>
-                Settings
+                {t('setting')}
               </MenuItem>
               <MenuItem onClick={handleLogout}>
                 <ListItemIcon>
                   <Logout fontSize="small"/>
                 </ListItemIcon>
-                Logout
+                {t('logOut')}
               </MenuItem>
             </Menu>
           </div>
@@ -285,15 +398,9 @@ export default function Layout() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader/>
-        <Routes>
-          {
-            publicRoutes.map((route, index) => {
-              const Page = route.component;
-              return <Route key={index} path={route.path} element={<Page/>}/>
-            })
-          }
-        </Routes>
+        {children}
       </Box>
+      <TLoading open={loading}/>
     </Box>
   );
 }
