@@ -2,5 +2,11 @@
   "hi": "你好",
   "profile": "轮廓",
   "setting": "环境",
-  "logOut": "登出"
+  "logOut": "登出",
+  "dashboard": "仪表板",
+  "transaction": "交易",
+  "commission": "委员会",
+  "senderReceiver": "发送者/接收者",
+  "documentation": "文档",
+  "statistic": "统计"
 }
