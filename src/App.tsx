@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
-import store, { useAppSelector } from "./store/store";
+import store from "./store/store";
 import { Provider } from "react-redux";
 import ContainerRouter from "./routes/ContainerRouter";
 
 function App() {
   return (
     <Provider store={store}>
-      <ContainerRouter/>
+      <Suspense fallback="loading">
+        <ContainerRouter/>
+      </Suspense>
     </Provider>
   );
 }

@@ -1,5 +1,5 @@
 import { Home } from "../pages/home";
-import { Profile } from "../pages/profile";
+import { Profile } from "../pages/profile/profile";
 import { Login } from "../pages/authen/login";
 import { Signup } from "../pages/authen/signup";
 

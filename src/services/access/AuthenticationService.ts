@@ -1,22 +1,6 @@
 import { objectNullOrEmpty } from "../../utils/utils";
 import { User } from "../../models/user-interface";
-
-const lstUserDefault = [
-  {
-    username: 'admin',
-    password: '123',
-    fullName: 'ADMIN',
-    accessToken: 'admin123',
-    validTo: 0,
-  },
-  {
-    username: 'tingo',
-    password: '123',
-    fullName: 'TINGO',
-    accessToken: 'tingo123',
-    validTo: 0,
-  }
-];
+import lstUserJSON from '../../data/user.json';
 
 export const AuthenticationService = {
   isLogin,
@@ -34,6 +18,9 @@ function getCurrentUser() {
 }
 
 function login(username: string, password: string) {
+  const lstUserDefault = lstUserJSON.map((user: any) => {
+    return user;
+  });
   // handle call api authentication
   const currentUser: any = lstUserDefault.find((it: User) => it.username === username && it.password === password);
   if (!objectNullOrEmpty(currentUser)) {

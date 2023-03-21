@@ -1,0 +1,22 @@
+[
+  {
+    "username": "admin",
+    "password": "123",
+    "fullName": "ADMIN",
+    "email": "admin@gmail.com",
+    "phone": "0988888888",
+    "role": "1",
+    "accessToken": "admin123",
+    "validTo": 0
+  },
+  {
+    "username": "tingo",
+    "password": "123",
+    "fullName": "TINGO",
+    "email": "tingo@gmail.com",
+    "phone": "0966666666",
+    "role": "2",
+    "accessToken": "tingo123",
+    "validTo": 0
+  }
+]

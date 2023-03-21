@@ -267,7 +267,7 @@ export default function Layout({ children }: Props) {
                 lstLocateChange && lstLocateChange.length > 0 &&
                 (
                   lstLocateChange.map((it: any) => {
-                    return <MenuItem onClick={() => onChangeLanguage(it.prefix)}>
+                    return <MenuItem key={it.name} onClick={() => onChangeLanguage(it.prefix)}>
                       <IconButton
                         size="small"
                       >
@@ -306,7 +306,7 @@ export default function Layout({ children }: Props) {
                 {t('hi')}&nbsp;<Typography><b>{genCurrentUserName()}</b></Typography>
               </MenuItem>
               <Divider/>
-              <MenuItem onClick={handleUserMenuClose}>
+              <MenuItem onClick={() => onNavigateToPage('/profile')}>
                 <ListItemIcon>
                   <Person fontSize="small"/>
                 </ListItemIcon>
