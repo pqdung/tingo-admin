@@ -12,15 +12,18 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { useStyles } from "./styles/makeTheme";
 import { Avatar, Menu, MenuItem } from "@mui/material";
-import { Logout, Person, Settings } from "@mui/icons-material";
+import {
+  Dashboard, Equalizer,
+  Launch,
+  Logout,
+  Person,
+  Settings
+} from "@mui/icons-material";
 import { AuthenticationService } from "../services/access/AuthenticationService";
 import { objectNullOrEmpty } from "../utils/utils";
 import { User } from "../models/user-interface";
@@ -30,6 +33,7 @@ import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import enLocale from '../assets/images/enLocale.png';
 import zhLocale from '../assets/images/zhLocale.png';
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -131,6 +135,7 @@ export default function Layout({ children }: Props) {
   const openLocaleMenu = Boolean(anchorElLocale);
   const [currentLocate, setCurrentLocate] = useState<any>({});
   const [lstLocateChange, setLstLocateChange] = useState<object[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (i18n.language) {
@@ -186,6 +191,34 @@ export default function Layout({ children }: Props) {
     i18n.changeLanguage(value);
   }
 
+  const onNavigateToPage = (path: string) => {
+    navigate(path);
+  };
+
+  const genSidebarItem = (item: string, path: string, icon: any) => {
+    return (
+      <ListItemButton
+        sx={{
+          minHeight: 48,
+          justifyContent: open ? 'initial' : 'center',
+          px: 2.5,
+        }}
+        onClick={() => onNavigateToPage(path)}
+      >
+        <ListItemIcon
+          sx={{
+            minWidth: 0,
+            mr: open ? 3 : 'auto',
+            justifyContent: 'center',
+          }}
+        >
+          {icon}
+        </ListItemIcon>
+        <ListItemText primary={item} sx={{ opacity: open ? 1 : 0 }}/>
+      </ListItemButton>
+    );
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline/>
@@ -225,29 +258,7 @@ export default function Layout({ children }: Props) {
               onClick={handleLocaleMenuClose}
               PaperProps={{
                 elevation: 0,
-                sx: {
-                  overflow: 'visible',
-                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                  mt: 1.5,
-                  '& .MuiAvatar-root': {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0,
-                  },
-                },
+                className: classes.MMenuPaperProps
               }}
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -286,29 +297,7 @@ export default function Layout({ children }: Props) {
               onClick={handleUserMenuClose}
               PaperProps={{
                 elevation: 0,
-                sx: {
-                  overflow: 'visible',
-                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                  mt: 1.5,
-                  '& .MuiAvatar-root': {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
-                  '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0,
-                  },
-                },
+                className: classes.MMenuPaperProps
               }}
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -347,53 +336,16 @@ export default function Layout({ children }: Props) {
         </DrawerHeader>
         <Divider/>
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }}/>
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {genSidebarItem(t('dashboard'), '/', <Dashboard/>)}
         </List>
         <Divider/>
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }}/>
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {genSidebarItem(t('profile'), '/profile', <Person/>)}
+          {genSidebarItem(t('statistic'), '/', <Equalizer/>)}
+        </List>
+        <Divider/>
+        <List>
+          {genSidebarItem(t('documentation'), '/', <Launch/>)}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

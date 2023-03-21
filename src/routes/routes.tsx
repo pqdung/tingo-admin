@@ -1,11 +1,10 @@
 import { Home } from "../pages/home";
 import { Profile } from "../pages/profile";
-import { Signup } from "../pages/authen/Signup";
-import { Login } from "../pages/authen/Login";
+import { Login } from "../pages/authen/login";
+import { Signup } from "../pages/authen/signup";
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/signup', component: Signup },
   { path: '/profile', component: Profile }
 ];
 
