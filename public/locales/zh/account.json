@@ -1,0 +1,27 @@
+{
+  "user": "用户",
+  "name": "姓名",
+  "email": "电子邮件",
+  "password": "密码",
+  "forgotPassword": "忘记密码?",
+  "login": "登录",
+  "register": "登记",
+  "resetPassword": "重设密码",
+  "back": "后退",
+  "noAccountLabel": "没有帐户？",
+  "hadAccountLabel": "已有帐户？",
+  "language": "语言",
+  "enterUser": "输入用户名",
+  "enterName": "输入名字",
+  "enterPassword": "输入密码",
+  "enterEmail": "输入电子邮件",
+  "enterRole": "输入角色",
+  "enterPhone": "输入电话",
+  "message": {
+    "loginFail": "您的用户名和/或密码不正确.",
+    "invalidEmail": "请提供一个有效的电子邮件地址.",
+    "invalidPassword": "密码必须至少8个字符，至少1个大写字母，1个小写字母，1个数字和1个特殊字符.",
+    "invalidOldPassword": "无效的密码.",
+    "notMatchConfirmPassword": "您的确认密码不匹配."
+  }
+}

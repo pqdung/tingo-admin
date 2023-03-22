@@ -6,12 +6,16 @@ import { useForm } from "react-hook-form";
 import registerLogo from '../../assets/images/registerLogo.svg';
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Error } from "@mui/icons-material";
 
 export function Signup(this: any) {
   const classes = useStyles();
+  const { t } = useTranslation(['account']);
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
+      email: '',
       username: '',
       password: ''
     }
@@ -32,43 +36,66 @@ export function Signup(this: any) {
           <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center' }} pr={4}>
             <Grid container p={2}>
               <Grid item xs={12}>
-                <TextField {...register('username', { required: 'Enter username.' })}
+                <TextField {...register('username', { required: t('enterUser').toString() })}
                            className={classes.MTextField}
                            id={"username"}
                            name={"username"}
-                           label="User"
-                           placeholder="Please input User"
+                           label={t('user')}
                            size={'small'}
                            fullWidth
                 />
-                {errors.username && <div className={classes.MTextValidate}>
-                    <svg className={classes.MWarning} aria-hidden="true" fill="currentColor" focusable="false"
-                         viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                    </svg>
-                  {errors.username?.message?.toString()}
-                </div>}
+                {
+                  errors.username && <div className={classes.MTextValidate}>
+                        <Error sx={{ fontSize: 'large' }}/>
+                    {errors.username?.message}
+                    </div>
+                }
               </Grid>
               <Grid item xs={12}>
-                <TextField {...register('password', { required: 'Enter password.' })}
+                <TextField {...register('email', {
+                  required: t('enterEmail').toString(),
+                  pattern: {
+                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                    message: t('message.invalidEmail')
+                  }
+                })}
+                           className={classes.MTextField}
+                           id={"email"}
+                           name={"email"}
+                           label={t('email')}
+                           size={'small'}
+                           fullWidth
+                />
+                {
+                  errors.email && <div className={classes.MTextValidate}>
+                        <Error sx={{ fontSize: 'large' }}/>
+                    {errors.email?.message}
+                    </div>
+                }
+              </Grid>
+              <Grid item xs={12}>
+                <TextField {...register('password', {
+                  required: t('enterPassword').toString(),
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                    message: t('message.invalidPassword')
+                  }
+                })}
                            className={classes.MTextField}
                            id={"password"}
                            name={"password"}
-                           label="Password"
+                           label={t('password')}
                            type="password"
                            autoComplete="current-password"
                            size={'small'}
                            fullWidth
                 />
-                {errors.password && <div className={classes.MTextValidate}>
-                    <svg className={classes.MWarning} aria-hidden="true" fill="currentColor" focusable="false"
-                         viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                    </svg>
-                  {errors.password?.message?.toString()}
-                </div>}
+                {
+                  errors.password && <div className={classes.MTextValidate}>
+                        <Error sx={{ fontSize: 'large' }}/>
+                    {errors.password?.message}
+                    </div>
+                }
               </Grid>
               <Grid item xs={12}>
                 <Button
@@ -76,14 +103,14 @@ export function Signup(this: any) {
                   variant={'contained'}
                   type={'submit'}
                 >
-                  Register
+                  {t('register')}
                 </Button>
               </Grid>
               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                <Typography fontSize={'small'} ml={1} mr={1}>{`Already have an account?`} </Typography>
-                <NavLink to={'/'}>
+                <Typography fontSize={'small'} ml={1} mr={1}>{t('hadAccountLabel')} </Typography>
+                <NavLink to={'/'} style={{ textDecoration: 'none' }}>
                   <Typography fontSize={'small'}>
-                    {'Login'}
+                    {t('login')}
                   </Typography>
                 </NavLink>
               </Grid>

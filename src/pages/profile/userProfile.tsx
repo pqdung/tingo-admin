@@ -4,12 +4,12 @@ import { objectNullOrEmpty } from "../../utils/utils";
 import { useStyles } from "../../layouts/styles/makeTheme";
 import { useForm } from "react-hook-form";
 import { AuthenticationService } from "../../services/access/AuthenticationService";
-import { AddPhotoAlternate } from "@mui/icons-material";
+import { AddPhotoAlternate, Error } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 
 export function UserProfile() {
   const classes = useStyles();
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation(['profile', 'account']);
   const [currentUser] = useState(AuthenticationService.getCurrentUser());
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
@@ -72,31 +72,37 @@ export function UserProfile() {
                   <img
                     width="100%"
                     src={selectedFile}
+                    alt={''}
                   />
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <TextField {...register('fullName', { required: 'Enter name.' })}
+              <TextField {...register('fullName', {
+                required: t('enterName', { ns: 'account' }).toString()
+              })}
                          className={classes.MTextField}
                          id={"fullName"}
                          name={"fullName"}
                          label={t('name')}
-                         placeholder="Please input name"
                          size={'small'}
                          fullWidth
               />
-              {errors.fullName && <div className={classes.MTextValidate}>
-                  <svg className={classes.MWarning} aria-hidden="true" fill="currentColor" focusable="false"
-                       viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                      <path
-                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                  </svg>
-                {errors.fullName?.message?.toString()}
-              </div>}
+              {
+                errors.fullName && <div className={classes.MTextValidate}>
+                      <Error sx={{ fontSize: 'large' }}/>
+                  {errors.fullName?.message?.toString()}
+                  </div>
+              }
             </Grid>
             <Grid item xs={12}>
-              <TextField {...register('email', { required: 'Enter email.' })}
+              <TextField {...register('email', {
+                required: t('enterEmail', { ns: 'account' }).toString(),
+                pattern: {
+                  value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                  message: t('message.invalidEmail', { ns: 'account' })
+                }
+              })}
                          className={classes.MTextField}
                          id={"email"}
                          name={"email"}
@@ -104,17 +110,17 @@ export function UserProfile() {
                          size={'small'}
                          fullWidth
               />
-              {errors.email && <div className={classes.MTextValidate}>
-                  <svg className={classes.MWarning} aria-hidden="true" fill="currentColor" focusable="false"
-                       viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                      <path
-                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                  </svg>
-                {errors.email?.message?.toString()}
-              </div>}
+              {
+                errors.email && <div className={classes.MTextValidate}>
+                      <Error sx={{ fontSize: 'large' }}/>
+                  {errors.email?.message?.toString()}
+                  </div>
+              }
             </Grid>
             <Grid item xs={12}>
-              <TextField {...register('phone', { required: 'Enter phone.' })}
+              <TextField {...register('phone', {
+                required: t('enterPhone', { ns: 'account' }).toString()
+              })}
                          className={classes.MTextField}
                          id={"phone"}
                          name={"phone"}
@@ -122,14 +128,12 @@ export function UserProfile() {
                          size={'small'}
                          fullWidth
               />
-              {errors.phone && <div className={classes.MTextValidate}>
-                  <svg className={classes.MWarning} aria-hidden="true" fill="currentColor" focusable="false"
-                       viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                      <path
-                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                  </svg>
-                {errors.phone?.message?.toString()}
-              </div>}
+              {
+                errors.phone && <div className={classes.MTextValidate}>
+                      <Error sx={{ fontSize: 'large' }}/>
+                  {errors.phone?.message?.toString()}
+                  </div>
+              }
             </Grid>
             <Grid item xs={12}>
               <Button

@@ -236,8 +236,8 @@ export default function Layout({ children }: Props) {
           >
             <MenuIcon/>
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Tingo
+          <Typography variant="h5" noWrap component="div">
+            {'TINGO'}
           </Typography>
           <div className={classes.MTopBarUser}>
             <IconButton

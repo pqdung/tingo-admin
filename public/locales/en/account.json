@@ -1,0 +1,27 @@
+{
+  "user": "User",
+  "name": "Name",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot password?",
+  "login": "Login",
+  "register": "Register",
+  "resetPassword": "Reset password",
+  "back": "Back",
+  "noAccountLabel": "Don't have an account?",
+  "hadAccountLabel": "Already have an account?",
+  "language": "Language",
+  "enterUser": "Enter username",
+  "enterName": "Enter name",
+  "enterPassword": "Enter password",
+  "enterEmail": "Enter email",
+  "enterRole": "Enter role",
+  "enterPhone": "Enter phone",
+  "message": {
+    "loginFail": "Your username and/or password are incorrect.",
+    "invalidEmail": "Please provide a valid email address.",
+    "invalidPassword": "Password must have at least 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character.",
+    "invalidOldPassword": "Invalid password.",
+    "notMatchConfirmPassword": "Your confirm password do not match."
+  }
+}
