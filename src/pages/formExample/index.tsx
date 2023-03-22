@@ -14,15 +14,11 @@ import {
   Select,
   MenuItem,
   InputAdornment,
+  Input,
 } from '@mui/material';
 
-//Date Picker Imports
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-//Export csv
-import { ExportToCsv } from 'export-to-csv';
+import { utils, writeFile, read } from 'xlsx';
+import moment from 'moment';
 
 //Mock Data
 import { data } from '../../fakeData/dataStatistic';
@@ -58,15 +54,14 @@ const StatisticDefault = () => {
   const { t } = useTranslation(['dashboard']);
   const [values, setValues] = useState<ValuesType>({
     query: '',
-    dateFrom: new Date(),
-    dateTo: new Date(),
+    dateFrom: null,
+    dateTo: null,
     minTransactionAmount: null,
     maxTransactionAmount: null,
     typeTransaction: 'ALL',
   });
 
-  const [dataTable, setDataTable] = useState<Employee[]>([]);
-  const [flagSearch, setFlagSearch] = useState<boolean>(false);
+  const [dataTable, setDataTable] = useState<Employee[]>(data);
 
   const columns = useMemo<MRT_ColumnDef<Employee>[]>(
     () => [
@@ -81,7 +76,8 @@ const StatisticDefault = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '1rem',
-            }}>
+            }}
+          >
             {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
             <span>{renderedCellValue}</span>
           </Box>
@@ -108,7 +104,8 @@ const StatisticDefault = () => {
               color: theme.palette.warning.dark,
               maxWidth: '9ch',
               p: '0.25rem',
-            })}>
+            })}
+          >
             {cell.getValue<number>()?.toLocaleString?.('en-US', {
               style: 'currency',
               currency: 'USD',
@@ -132,7 +129,8 @@ const StatisticDefault = () => {
               color: theme.palette.success.dark,
               maxWidth: '9ch',
               p: '0.25rem',
-            })}>
+            })}
+          >
             {cell.getValue<number>()?.toLocaleString?.('en-US', {
               style: 'currency',
               currency: 'USD',
@@ -160,18 +158,6 @@ const StatisticDefault = () => {
     []
   );
 
-  const csvOptions = {
-    fieldSeparator: ',',
-    quoteStrings: '"',
-    decimalSeparator: '.',
-    showLabels: true,
-    useBom: true,
-    useKeysAsHeaders: false,
-    headers: columns.map((c) => c.header),
-  };
-
-  const exportToCsv = new ExportToCsv(csvOptions);
-
   const onClear = () => {
     setValues({
       query: '',
@@ -183,9 +169,75 @@ const StatisticDefault = () => {
     });
   };
 
-  const onSearch = () => {
-    setDataTable(data);
-    setFlagSearch(true);
+  const onSearch = async () => {
+    // if (
+    //   !values.query &&
+    //   !values.dateFrom &&
+    //   !values.dateTo &&
+    //   !values.maxTransactionAmount &&
+    //   !values.minTransactionAmount &&
+    //   values.typeTransaction === 'ALL'
+    // ) {
+    //   setDataTable(data);
+    // } else {
+    //   let dataQuery: Employee[] = [],
+    //     dataDateFrom,
+    //     dataDateTo,
+    //     dataMin,
+    //     dataType: Employee[] = [];
+    //   if (!!values.query) {
+    //     dataQuery = data.filter(
+    //       (el: Employee) => `${el.firstName} ${el.lastName}`.includes(values.query) || el.email === values.query
+    //     );
+    //   }
+    //   if (values.dateFrom) {
+    //     let newData = data.filter((el: Employee) => moment(el.transactonDate).isAfter(moment(values.dateFrom)));
+    //   }
+    //   if (values.dateFrom) {
+    //     let newData = data.filter((el: Employee) => moment(el.transactonDate).isBefore(moment(values.dateTo)));
+    //   }
+    //   if (!!values.minTransactionAmount) {
+    //     let newData = data.filter((el: Employee) => el.transactionAmount >= Number(values.minTransactionAmount));
+    //   }
+    //   if (!!values.maxTransactionAmount) {
+    //     let newData = data.filter((el: Employee) => el.transactionAmount <= Number(values.maxTransactionAmount));
+    //   }
+    //   if (values.typeTransaction === TYPE_TRANSACTION.INLAND) {
+    //     dataType = data.filter((el: Employee) => el.typeTransaction === TYPE_TRANSACTION.INLAND);
+    //   }
+    //   if (values.typeTransaction === TYPE_TRANSACTION.INTERNATIONAL) {
+    //     let newData = data.filter((el: Employee) => el.typeTransaction === TYPE_TRANSACTION.INTERNATIONAL);
+    //   }
+    //   const a: Employee[] = new Set<Employee>([...dataQuery, ...dataType])
+    //   setDataTable(a);
+    // }
+  };
+
+  const handleImportFile = (e: any) => {
+    const files = e.target.files;
+    if (files && files[0]) {
+      const reader = new FileReader();
+      const rABS = !!reader.readAsBinaryString;
+      reader.onload = (e: any) => {
+        /* Parse data */
+        const bstr = e.target.result;
+        const wb = read(bstr, { type: rABS ? 'binary' : 'array' });
+        /* Get first worksheet */
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        /* Convert array of arrays */
+        const data = utils.sheet_to_json<Employee>(ws, {
+          blankrows: false,
+          raw: true,
+          rawNumbers: true,
+        });
+        setDataTable(data);
+
+        /* Update state */
+      };
+      if (rABS) reader.readAsBinaryString(files[0]);
+      else reader.readAsArrayBuffer(files[0]);
+    }
   };
 
   return (
@@ -197,12 +249,7 @@ const StatisticDefault = () => {
         <MainCard content={false} sx={{ p: 3 }}>
           <Grid container rowSpacing={4} columnSpacing={2.75}>
             <Grid item xs={4}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                component="div"
-                ml={1}
-                mb={-1}>
+              <Typography gutterBottom variant="subtitle1" component="div" ml={1} mb={-1}>
                 Name or Email
               </Typography>
               <TextField
@@ -216,50 +263,25 @@ const StatisticDefault = () => {
               />
             </Grid>
             <Grid item xs={4}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                component="div"
-                ml={1}
-                mb={-1}>
+              <Typography gutterBottom variant="subtitle1" component="div" ml={1} mb={-1}>
                 Date from
               </Typography>
               <DatePickerDefault
-                handleOnChange={onChangeDate.bind(
-                  this,
-                  setValues,
-                  values,
-                  'dateFrom'
-                )}
+                handleOnChange={onChangeDate.bind(this, setValues, values, 'dateFrom')}
                 value={values.dateFrom}
               />
             </Grid>
             <Grid item xs={4}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                component="div"
-                ml={1}
-                mb={-1}>
+              <Typography gutterBottom variant="subtitle1" component="div" ml={1} mb={-1}>
                 Date to
               </Typography>
               <DatePickerDefault
-                handleOnChange={onChangeDate.bind(
-                  this,
-                  setValues,
-                  values,
-                  'dateTo'
-                )}
+                handleOnChange={onChangeDate.bind(this, setValues, values, 'dateTo')}
                 value={values.dateTo}
               />
             </Grid>
             <Grid item xs={4}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                component="div"
-                ml={1}
-                mb={-1}>
+              <Typography gutterBottom variant="subtitle1" component="div" ml={1} mb={-1}>
                 Minimum transaction amount
               </Typography>
               <TextField
@@ -272,19 +294,12 @@ const StatisticDefault = () => {
                 size={'small'}
                 onChange={onChange.bind(this, setValues, values)}
                 InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">$</InputAdornment>
-                  ),
+                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
                 }}
               />
             </Grid>
             <Grid item xs={4}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                component="div"
-                ml={1}
-                mb={-1}>
+              <Typography gutterBottom variant="subtitle1" component="div" ml={1} mb={-1}>
                 Maximum transaction amount
               </Typography>
               <TextField
@@ -297,19 +312,12 @@ const StatisticDefault = () => {
                 size={'small'}
                 onChange={onChange.bind(this, setValues, values)}
                 InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">$</InputAdornment>
-                  ),
+                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
                 }}
               />
             </Grid>
             <Grid item xs={4}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                component="div"
-                ml={1}
-                mb={-1}>
+              <Typography gutterBottom variant="subtitle1" component="div" ml={1} mb={-1}>
                 Type of transaction
               </Typography>
               <FormControl fullWidth className={classes.Mselect}>
@@ -320,23 +328,43 @@ const StatisticDefault = () => {
                   size={'small'}
                   value={values.typeTransaction}
                   onChange={onChange.bind(this, setValues, values)}
-                  inputProps={{ 'aria-label': 'Without label' }}>
+                  inputProps={{ 'aria-label': 'Without label' }}
+                >
                   <MenuItem value={'ALL'}>All</MenuItem>
                   <MenuItem value={TYPE_TRANSACTION.INLAND}>Inland</MenuItem>
-                  <MenuItem value={TYPE_TRANSACTION.INTERNATIONAL}>
-                    International
-                  </MenuItem>
+                  <MenuItem value={TYPE_TRANSACTION.INTERNATIONAL}>International</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} mt={3} textAlign={'right'}>
+              <Input
+                id="import-ap-button-file"
+                data-testid="testId-btnImport"
+                type="file"
+                onChange={handleImportFile}
+                style={{ display: 'none' }}
+              />
+
+              <label htmlFor="import-ap-button-file">
+                <Button
+                  id="import-file"
+                  variant="contained"
+                  color="success"
+                  className={classes.MbtnSearch}
+                  sx={{ width: 126 }}
+                  component="span"
+                >
+                  Import
+                </Button>
+              </label>
               <Button
                 data-testid="testId-btnClear"
                 variant="contained"
                 sx={{ width: '126px', height: '40px', ml: 2 }}
                 className={classes.MbtnClear}
                 color="warning"
-                onClick={onClear}>
+                onClick={onClear}
+              >
                 Clear
               </Button>
               <Button
@@ -345,7 +373,8 @@ const StatisticDefault = () => {
                 color="primary"
                 sx={{ width: '126px', height: '40px', ml: 2 }}
                 className={classes.MbtnSearch}
-                onClick={onSearch}>
+                onClick={onSearch}
+              >
                 Search
               </Button>
             </Grid>
@@ -353,44 +382,46 @@ const StatisticDefault = () => {
         </MainCard>
       </Grid>
       <Grid item xs={12}>
-        {flagSearch && (
-          <MaterialReactTable
-            columns={columns}
-            data={dataTable}
-            enableRowSelection
-            positionToolbarAlertBanner="bottom"
-            renderTopToolbarCustomActions={({ table }) => {
-              const handleDeactivate = () => {
-                exportToCsv.generateCsv(
-                  table.getSelectedRowModel().flatRows.map((row) => {
-                    return {
-                      name: `${row.original.firstName} ${row.original.lastName}`,
-                      email: row.original.email,
-                      transactionAmount: row.original.transactionAmount,
-                      commissionAmount: row.original.commissionAmount,
-                      typeTransaction: row.original.typeTransaction,
-                      transactionDate: row.original.transactonDate,
-                    };
-                  })
-                );
-              };
+        <MaterialReactTable
+          columns={columns}
+          data={dataTable}
+          enableRowSelection
+          positionToolbarAlertBanner="bottom"
+          renderTopToolbarCustomActions={({ table }) => {
+            const handleDeactivate = () => {
+              let dataExport = table.getSelectedRowModel().flatRows.map((row) => {
+                return {
+                  firstName: row.original.lastName,
+                  lastName: row.original.lastName,
+                  email: row.original.email,
+                  transactionAmount: row.original.transactionAmount,
+                  commissionAmount: row.original.commissionAmount,
+                  typeTransaction: row.original.typeTransaction,
+                  transactionDate: row.original.transactonDate,
+                };
+              });
+              const ws = utils.json_to_sheet(dataExport);
+              const wb = utils.book_new();
+              utils.book_append_sheet(wb, ws, 'SheetJS');
+              /* generate XLSX file and send to client */
+              writeFile(wb, 'Example.xlsx');
+            };
 
-              return (
-                <div
-                  style={{ display: 'flex', gap: '0.5rem', padding: '0.5rem' }}>
-                  <Button
-                    sx={{ textTransform: 'none' }}
-                    color="success"
-                    disabled={!table.getIsSomeRowsSelected()}
-                    onClick={handleDeactivate}
-                    variant="contained">
-                    Export Data
-                  </Button>
-                </div>
-              );
-            }}
-          />
-        )}
+            return (
+              <div style={{ display: 'flex', gap: '0.5rem', padding: '0.5rem' }}>
+                <Button
+                  sx={{ textTransform: 'none' }}
+                  color="success"
+                  disabled={!table.getIsSomeRowsSelected()}
+                  onClick={handleDeactivate}
+                  variant="contained"
+                >
+                  Export Data
+                </Button>
+              </div>
+            );
+          }}
+        />
       </Grid>
     </Grid>
   );
