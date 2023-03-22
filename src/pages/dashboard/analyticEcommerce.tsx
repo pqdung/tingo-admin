@@ -1,16 +1,8 @@
-import PropTypes from 'prop-types';
-
-// material-ui
 import { Box, Chip, Grid, Stack, Typography } from '@mui/material';
-
-// project import
-
-// assets
 import ApiOutlinedIcon from '@mui/icons-material/ApiOutlined';
 import WaterfallChartOutlinedIcon from '@mui/icons-material/WaterfallChartOutlined';
 import MainCard from '../../components/mainCard';
-
-// ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   color?: any;
@@ -29,6 +21,7 @@ export default function AnalyticEcommerce({
   isLoss,
   extra,
 }: Props) {
+  const { t } = useTranslation(['dashboard']);
   return (
     <MainCard contentSX={{ p: 2.25 }} sx={{ p: 2 }}>
       <Stack spacing={0.5}>
@@ -70,14 +63,14 @@ export default function AnalyticEcommerce({
       </Stack>
       <Box sx={{ pt: 2.25 }}>
         <Typography variant="caption" color="textSecondary">
-          You made an extra{' '}
+          {t('You made an extra')}{' '}
           <Typography
             component="span"
             variant="caption"
             sx={{ color: `${color || 'primary'}.main` }}>
             {extra}
           </Typography>{' '}
-          this year
+          {t('this year')}
         </Typography>
       </Box>
     </MainCard>

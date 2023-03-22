@@ -1,6 +1,4 @@
 import { useState } from 'react';
-
-// material-ui
 import {
   Avatar,
   AvatarGroup,
@@ -17,8 +15,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-
-// assets
 import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
 import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -28,15 +24,14 @@ import ReportAreaChart from './reportAreChart';
 import SalesColumnChart from './saleColumnChart';
 import MainCard from '../../components/mainCard';
 import AnalyticEcommerce from './analyticEcommerce';
+import { useTranslation } from 'react-i18next';
 
-// avatar style
 const avatarSX = {
   width: 36,
   height: 36,
   fontSize: '1rem',
 };
 
-// action style
 const actionSX = {
   mt: 0.75,
   ml: 1,
@@ -46,35 +41,35 @@ const actionSX = {
   transform: 'none',
 };
 
-// sales report status
-const status = [
-  {
-    value: 'week',
-    label: 'This Week',
-  },
-  {
-    value: 'month',
-    label: 'This Month',
-  },
-  {
-    value: 'year',
-    label: 'This Year',
-  },
-];
-
 const DashboardDefauft = () => {
+  const { t } = useTranslation(['dashboard']);
   const [value, setValue] = useState('week');
   const [slot, setSlot] = useState('week');
+
+  const status = [
+    {
+      value: 'week',
+      label: t('This Week'),
+    },
+    {
+      value: 'month',
+      label: t('This Month'),
+    },
+    {
+      value: 'year',
+      label: t('This Year'),
+    },
+  ];
 
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}
       <Grid item xs={12} sx={{ mb: -2.25 }}>
-        <Typography variant="h5">Dashboard</Typography>
+        <Typography variant="h5">{t('dashboard')}</Typography>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Total Page Views"
+          title={t('totalTransaction')}
           count="2,65,214"
           percentage={59.3}
           extra="20,000"
@@ -82,7 +77,7 @@ const DashboardDefauft = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Total Users"
+          title={t('totalUsers')}
           count="93,497"
           percentage={70.5}
           extra="9,400"
@@ -90,7 +85,7 @@ const DashboardDefauft = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Total Order"
+          title={t('totalOder')}
           count="12,800"
           percentage={27.4}
           isLoss
@@ -100,7 +95,7 @@ const DashboardDefauft = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Total Sales"
+          title={t('totalSales')}
           count="$50,078"
           percentage={27.4}
           isLoss
@@ -119,7 +114,7 @@ const DashboardDefauft = () => {
       <Grid item xs={12} md={7} lg={8}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Unique Visitor</Typography>
+            <Typography variant="h5">{t('uniqueVisitor')}</Typography>
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
@@ -129,7 +124,7 @@ const DashboardDefauft = () => {
                 color={slot === 'month' ? 'primary' : 'secondary'}
                 variant={slot === 'month' ? 'outlined' : 'text'}
                 sx={{ textTransform: 'none' }}>
-                Month
+                {t('Month')}
               </Button>
               <Button
                 size="small"
@@ -137,7 +132,7 @@ const DashboardDefauft = () => {
                 color={slot === 'week' ? 'primary' : 'secondary'}
                 variant={slot === 'week' ? 'outlined' : 'text'}
                 sx={{ textTransform: 'none' }}>
-                Week
+                {t('Week')}
               </Button>
             </Stack>
           </Grid>
@@ -151,7 +146,7 @@ const DashboardDefauft = () => {
       <Grid item xs={12} md={5} lg={4}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Income Overview</Typography>
+            <Typography variant="h5">{t('incomeOverview')}</Typography>
           </Grid>
           <Grid item />
         </Grid>
@@ -159,7 +154,7 @@ const DashboardDefauft = () => {
           <Box sx={{ p: 2, pb: 0 }}>
             <Stack spacing={2}>
               <Typography variant="h6" color="textSecondary">
-                This Week Statistics
+                {t('This Week Statistics')}
               </Typography>
               <Typography variant="h3">$10,350</Typography>
             </Stack>
@@ -172,22 +167,22 @@ const DashboardDefauft = () => {
       <Grid item xs={12} md={12} lg={12} sx={{ p: 2, pr: 0 }}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Analytics Report</Typography>
+            <Typography variant="h5">{t('Analytics Report')}</Typography>
           </Grid>
           <Grid item />
         </Grid>
         <MainCard sx={{ mt: 2 }} content={false}>
           <List sx={{ p: 0, '& .MuiListItemButton-root': { py: 2 } }}>
             <ListItemButton divider>
-              <ListItemText primary="Company Finance Growth" />
+              <ListItemText primary={t('Company Finance Growth')} />
               <Typography variant="h5">+45.14%</Typography>
             </ListItemButton>
             <ListItemButton divider>
-              <ListItemText primary="Company Expenses Ratio" />
+              <ListItemText primary={t('Company Expenses Ratio')} />
               <Typography variant="h5">0.58%</Typography>
             </ListItemButton>
             <ListItemButton>
-              <ListItemText primary="Business Risk Cases" />
+              <ListItemText primary={t('Business Risk Cases')} />
               <Typography variant="h5">Low</Typography>
             </ListItemButton>
           </List>
@@ -198,7 +193,7 @@ const DashboardDefauft = () => {
       <Grid item xs={12} md={7} lg={7}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Sales Report</Typography>
+            <Typography variant="h5">{t('Sales Report')}</Typography>
           </Grid>
           <Grid item>
             <TextField
@@ -221,7 +216,7 @@ const DashboardDefauft = () => {
         <MainCard sx={{ mt: 1.75, p: 2, pb: 0 }}>
           <Stack spacing={1.5} sx={{ mb: -12 }}>
             <Typography variant="h6" color="secondary">
-              Net Profit
+              {t('Net Profit')}
             </Typography>
             <Typography variant="h4">
               ${value === 'month' ? 2614 : value === 'year' ? 17247 : 108}
@@ -233,7 +228,7 @@ const DashboardDefauft = () => {
       <Grid item xs={12} md={5} lg={5}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Transaction History</Typography>
+            <Typography variant="h5">{t('Transaction History')}</Typography>
           </Grid>
           <Grid item />
         </Grid>
@@ -264,7 +259,9 @@ const DashboardDefauft = () => {
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <Typography variant="subtitle1">Order #002434</Typography>
+                  <Typography variant="subtitle1">
+                    {t('Transaction')} #002434
+                  </Typography>
                 }
                 secondary="Today, 2:00 AM"
               />
@@ -291,7 +288,9 @@ const DashboardDefauft = () => {
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <Typography variant="subtitle1">Order #984947</Typography>
+                  <Typography variant="subtitle1">
+                    {t('Transaction')} #984947
+                  </Typography>
                 }
                 secondary="5 August, 1:45 PM"
               />
@@ -318,7 +317,9 @@ const DashboardDefauft = () => {
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <Typography variant="subtitle1">Order #988784</Typography>
+                  <Typography variant="subtitle1">
+                    {t('Transaction')} #988784
+                  </Typography>
                 }
                 secondary="7 hours ago"
               />
@@ -341,10 +342,10 @@ const DashboardDefauft = () => {
               <Grid item>
                 <Stack>
                   <Typography variant="h5" noWrap>
-                    Help & Support Chat
+                    {t('Help & Support Chat')}
                   </Typography>
                   <Typography variant="caption" color="secondary" noWrap>
-                    Typical replay within 5 min
+                    {t('Typical replay within 5 min')}
                   </Typography>
                 </Stack>
               </Grid>
@@ -353,7 +354,7 @@ const DashboardDefauft = () => {
               size="small"
               variant="contained"
               sx={{ textTransform: 'capitalize' }}>
-              Need Help?
+              {t('Need Help')}?
             </Button>
           </Stack>
         </MainCard>

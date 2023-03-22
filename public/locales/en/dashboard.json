@@ -1,13 +1,5 @@
 {
-  "hi": "Hi",
-  "profile": "Profile",
-  "setting": "Settings",
-  "logOut": "Log out",
   "dashboard": "Dashboard",
-  "transaction": "Transaction",
-  "commission": "Commission",
-  "senderReceiver": "Sender/Receiver",
-  "documentation": "Documentation",
   "statistic": "Statistic",
   "totalTransaction": "Total Transaction",
   "totalUsers": "Total Users",
@@ -34,5 +26,8 @@
   "Business Risk Cases": "Business Risk Cases",
   "Help & Support Chat": "Help & Support Chat",
   "Typical replay within 5 min": "Typical replay within 5 min",
-  "Need Help": "Need Help"
+  "Need Help": "Need Help",
+  "Series 1": "Series 1",
+  "You made an extra": "You made an extra",
+  "this year": "this year"
 }

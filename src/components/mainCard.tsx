@@ -1,7 +1,4 @@
-import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import {
   Card,
@@ -10,8 +7,6 @@ import {
   Divider,
   Typography,
 } from '@mui/material';
-
-// project import
 
 interface Props {
   border?: boolean;
@@ -30,13 +25,10 @@ interface Props {
   ref?: any;
 }
 
-// header style
 const headerSX = {
   p: 2.5,
   '& .MuiCardHeader-action': { m: '0px auto', alignSelf: 'center' },
 };
-
-// ==============================|| CUSTOM - MAIN CARD ||============================== //
 
 const MainCard = forwardRef(
   ({

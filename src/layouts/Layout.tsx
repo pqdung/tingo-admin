@@ -341,7 +341,7 @@ export default function Layout({ children }: Props) {
         <Divider/>
         <List>
           {genSidebarItem(t('profile'), '/profile', <Person/>)}
-          {genSidebarItem(t('statistic'), '/', <Equalizer/>)}
+          {genSidebarItem(t('statistic'), '/statistic', <Equalizer/>)}
         </List>
         <Divider/>
         <List>

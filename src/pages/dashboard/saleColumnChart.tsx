@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
-
-// third-party
 import ReactApexChart from 'react-apexcharts';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   type: string;
 }
 
-// chart options
 const chartOptions = {
   chart: {
     type: 'bar',
@@ -82,7 +78,7 @@ const chartOptions = {
 
 export default function SalesColumnChart({ type }: Props) {
   const theme = useTheme();
-
+  const { t } = useTranslation(['dashboard']);
   const { primary, secondary } = theme.palette.text;
   const line = theme.palette.divider;
 
@@ -92,11 +88,11 @@ export default function SalesColumnChart({ type }: Props) {
 
   const [series, setSeries] = useState([
     {
-      name: 'Net Profit',
+      name: t('Net Profit'),
       data: [14, 20, 30, 16, 8, 11, 9],
     },
     {
-      name: 'Revenue',
+      name: t('Revenue'),
       data: [20, 16, 14, 24, 12, 15, 11],
     },
   ]);
@@ -130,7 +126,7 @@ export default function SalesColumnChart({ type }: Props) {
     }));
     setSeries([
       {
-        name: 'Net Profit',
+        name: t('Net Profit'),
         data:
           type === 'month'
             ? [180, 90, 135, 114, 120, 145, 350, 440, 120, 600, 240, 80]
@@ -139,7 +135,7 @@ export default function SalesColumnChart({ type }: Props) {
             : [14, 20, 30, 16, 8, 11, 9],
       },
       {
-        name: 'Revenue',
+        name: t('Revenue'),
         data:
           type === 'month'
             ? [120, 45, 78, 150, 168, 99, 120, 30, 300, 280, 150, 50]

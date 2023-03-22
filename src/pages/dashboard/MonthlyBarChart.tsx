@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
-
-// third-party
 import ReactApexChart from 'react-apexcharts';
 
-// chart options
 const barChartOptions = {
   chart: {
     type: 'bar',
@@ -41,8 +36,6 @@ const barChartOptions = {
   },
 };
 
-// ==============================|| MONTHLY BAR CHART ||============================== //
-
 export default function MonthlyBarChart() {
   const theme = useTheme();
 
@@ -65,12 +58,16 @@ export default function MonthlyBarChart() {
         theme: 'light',
       },
     }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [primary, info, secondary]);
 
   return (
     <div id="chart">
-      <ReactApexChart options={options} series={series} type="bar" height={365} />
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="bar"
+        height={365}
+      />
     </div>
   );
 }

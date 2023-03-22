@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
-
-// third-party
 import ReactApexChart from 'react-apexcharts';
+import { useTranslation } from 'react-i18next';
 
-// chart options
 const areaChartOptions = {
   chart: {
     height: 340,
@@ -57,11 +53,9 @@ const areaChartOptions = {
   },
 };
 
-// ==============================|| REPORT AREA CHART ||============================== //
-
 export default function ReportAreaChart() {
   const theme = useTheme();
-
+  const { t } = useTranslation(['dashboard']);
   const { primary, secondary } = theme.palette.text;
   const line = theme.palette.divider;
 
@@ -71,13 +65,6 @@ export default function ReportAreaChart() {
     setOptions((prevState: any) => ({
       ...prevState,
       colors: [theme.palette.warning.main],
-      xaxis: {
-        labels: {
-          style: {
-            colors: [secondary, secondary, secondary, secondary, secondary, secondary, secondary, secondary],
-          },
-        },
-      },
       grid: {
         borderColor: line,
       },
@@ -94,10 +81,17 @@ export default function ReportAreaChart() {
 
   const [series] = useState([
     {
-      name: 'Series 1',
+      name: t('Series 1'),
       data: [58, 115, 28, 83, 63, 75, 35, 55],
     },
   ]);
 
-  return <ReactApexChart options={options} series={series} type="line" height={345} />;
+  return (
+    <ReactApexChart
+      options={options}
+      series={series}
+      type="line"
+      height={345}
+    />
+  );
 }

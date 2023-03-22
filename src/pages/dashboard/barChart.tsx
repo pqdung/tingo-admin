@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
-
-// third-party
 import ReactApexChart from 'react-apexcharts';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   slot: any;
@@ -32,11 +29,9 @@ const areaChartOptions = {
   },
 };
 
-// ==============================|| INCOME AREA CHART ||============================== //
-
 export default function IncomeAreaChart({ slot }: Props) {
   const theme = useTheme();
-
+  const { t } = useTranslation(['dashboard']);
   const { primary, secondary } = theme.palette.text;
   const line = theme.palette.divider;
 
@@ -88,11 +83,11 @@ export default function IncomeAreaChart({ slot }: Props) {
 
   const [series, setSeries] = useState([
     {
-      name: 'Page Views',
+      name: t('Page Views'),
       data: [0, 86, 28, 115, 48, 210, 136],
     },
     {
-      name: 'Sessions',
+      name: t('Sessions'),
       data: [0, 43, 14, 56, 24, 105, 68],
     },
   ]);
@@ -100,14 +95,14 @@ export default function IncomeAreaChart({ slot }: Props) {
   useEffect(() => {
     setSeries([
       {
-        name: 'Page Views',
+        name: t('Page Views'),
         data:
           slot === 'month'
             ? [76, 85, 101, 98, 87, 105, 91, 114, 94, 86, 115, 35]
             : [31, 40, 28, 51, 42, 109, 100],
       },
       {
-        name: 'Sessions',
+        name: t('Sessions'),
         data:
           slot === 'month'
             ? [110, 60, 150, 35, 60, 36, 26, 45, 65, 52, 53, 41]
