@@ -1,0 +1,16 @@
+{
+  "accountHeader": "ACCOUNT",
+  "profileHeader": "PROFILE",
+  "changePasswordHeader": "CHANGE PASSWORD",
+  "name": "Name",
+  "email": "Email",
+  "role": "Role",
+  "phone": "Phone",
+  "password": "Password",
+  "currentPassword": "Current password",
+  "newPassword": "New password",
+  "confirmPassword": "Confirm password",
+  "save": "Save",
+  "reset": "Reset",
+  "saveSuccess": "Save successfully!"
+}

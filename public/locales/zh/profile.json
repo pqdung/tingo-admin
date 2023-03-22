@@ -1,0 +1,16 @@
+{
+  "accountHeader": "帐户",
+  "profileHeader": "轮廓",
+  "changePasswordHeader": "更改密码",
+  "name": "姓名",
+  "email": "电子邮件",
+  "role": "角色",
+  "phone": "电话",
+  "password": "密码",
+  "currentPassword": "当前密码",
+  "newPassword": "新密码",
+  "confirmPassword": "确认密码",
+  "save": "节省",
+  "reset": "重置",
+  "saveSuccess": "保存成功!"
+}

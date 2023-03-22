@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  MMenuPaperProps:{
+  MMenuPaperProps: {
     overflow: 'visible',
     filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
     marginTop: 1.5,
@@ -73,6 +73,8 @@ const useStyles = makeStyles({
     margin: '10px !important',
   },
   MTextValidate: {
+    display: 'flex',
+    gap: '0.2rem',
     margin: '0 10px !important',
     color: 'red',
     fontSize: 'small',

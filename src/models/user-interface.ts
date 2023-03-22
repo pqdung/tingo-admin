@@ -14,17 +14,35 @@ export type loginForm = {
   password: string;
 };
 
-export class KeyCloakError {
-  constructor(code: number, message: string) {
-    console.log(code);
-    console.log(message);
-  }
-}
-
 export interface User {
   username: string;
   password: string;
   fullName: string;
+  email: string;
+  phone: string;
+  role: string;
   accessToken: string;
   validTo: number;
 }
+
+export interface UserAccount {
+  fullName: string;
+  email: string;
+  role: string;
+}
+
+export interface UserProfile {
+  fullName: string;
+  email: string;
+  phone: string;
+  image: string;
+}
+
+export interface UserPassword {
+  password: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+
+

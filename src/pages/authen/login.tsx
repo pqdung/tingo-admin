@@ -1,16 +1,35 @@
 import * as React from 'react';
 import { useStyles } from "../../layouts/styles/makeTheme";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { objectNullOrEmpty } from "../../utils/utils";
 import { AuthenticationService } from "../../services/access/AuthenticationService";
 import TLoading from "./TLoading";
 import { useForm } from "react-hook-form";
 import loginLogo from '../../assets/images/loginLogo.svg';
 import { NavLink } from "react-router-dom";
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
+import enLocale from "../../assets/images/enLocale.png";
+import zhLocale from "../../assets/images/zhLocale.png";
+import { Error } from "@mui/icons-material";
+
+const lstLocale = [
+  {
+    prefix: 'en',
+    imgUrl: enLocale,
+    name: 'English',
+  },
+  {
+    prefix: 'zh',
+    imgUrl: zhLocale,
+    name: 'Hong Kong',
+  }
+];
 
 export function Login() {
   const classes = useStyles();
+  const { t } = useTranslation(['account']);
   const [errorLogin, setErrorLogin] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -19,6 +38,20 @@ export function Login() {
       password: ''
     }
   });
+  const [currentLocate, setCurrentLocate] = useState<any>(lstLocale.find((it: any) => it.prefix === i18n.language));
+
+  useEffect(() => {
+    if (i18n.language) {
+      const locate: any = lstLocale.find((it: any) => it.prefix === i18n.language);
+      if (!objectNullOrEmpty(locate)) {
+        setCurrentLocate(locate);
+      }
+    }
+  }, [i18n.language]);
+
+  const onChangeLanguage = (e: any) => {
+    i18n.changeLanguage(e.target.value);
+  }
 
   const onHandleLogin = async (data: any) => {
     setLoading(true);
@@ -50,46 +83,48 @@ export function Login() {
           <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center' }} pr={4}>
             <Grid container p={2}>
               {(!objectNullOrEmpty(errorLogin) && !errorLogin.isLogin) && <div className={classes.MTextValidate}>
-                {'Your username and/or password are incorrect.'}
+                {t('message.loginFail')}
               </div>}
               <Grid item xs={12}>
-                <TextField {...register('username', { required: 'Enter username.' })}
+                <TextField {...register('username', { required: true })}
                            className={classes.MTextField}
                            id={"username"}
                            name={"username"}
-                           label="User"
-                           placeholder="Please input User"
+                           label={t('user')}
                            size={'small'}
                            fullWidth
                 />
-                {errors.username && <div className={classes.MTextValidate}>
-                    <svg className={classes.MWarning} aria-hidden="true" fill="currentColor" focusable="false"
-                         viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                    </svg>
-                  {errors.username?.message?.toString()}
-                </div>}
+                {
+                  errors.username && <div className={classes.MTextValidate}>
+                        <Error sx={{ fontSize: 'large' }}/>
+                    {t('enterUser')}
+                    </div>
+                }
               </Grid>
-              <Grid item xs={12}>
-                <TextField {...register('password', { required: 'Enter password.' })}
+              <Grid item xs={12} sx={{ width: '100%' }}>
+                <TextField {...register('password', { required: true })}
                            className={classes.MTextField}
                            id={"password"}
                            name={"password"}
-                           label="Password"
+                           label={t('password')}
                            type="password"
                            autoComplete="current-password"
                            size={'small'}
                            fullWidth
                 />
-                {errors.password && <div className={classes.MTextValidate}>
-                    <svg className={classes.MWarning} aria-hidden="true" fill="currentColor" focusable="false"
-                         viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                    </svg>
-                  {errors.password?.message?.toString()}
-                </div>}
+                {
+                  errors.password && <div className={classes.MTextValidate}>
+                        <Error sx={{ fontSize: 'large' }}/>
+                    {t('enterPassword')}
+                    </div>
+                }
+                <Box sx={{ float: 'right' }}>
+                  <NavLink to={'/forgot-password'} style={{ textDecoration: 'none' }}>
+                    <Typography fontSize={'small'}>
+                      {t('forgotPassword')}
+                    </Typography>
+                  </NavLink>
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <Button
@@ -97,16 +132,34 @@ export function Login() {
                   variant={'contained'}
                   type={'submit'}
                 >
-                  Login
+                  {t('login')}
                 </Button>
               </Grid>
               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                <Typography fontSize={'small'} ml={1} mr={1}>{`Don't have an account?`} </Typography>
-                <NavLink to={'/signup'}>
+                <Typography fontSize={'small'} ml={1} mr={1}>{t('noAccountLabel')} </Typography>
+                <NavLink to={'/signup'} style={{ textDecoration: 'none' }}>
                   <Typography fontSize={'small'}>
-                    {'Register'}
+                    {t('register')}
                   </Typography>
                 </NavLink>
+              </Grid>
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }} mt={1}>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <Select
+                    labelId="demo-select-small"
+                    id="demo-select-small"
+                    value={objectNullOrEmpty(currentLocate) ? '' : currentLocate.prefix}
+                    inputProps={{ sx: { fontSize: 'smaller' } }}
+                    onChange={onChangeLanguage}
+                  >
+                    {
+                      lstLocale.map((it: any) => {
+                        return <MenuItem sx={{ fontSize: 'small' }} key={it.prefix}
+                                         value={it.prefix}>{it.name}</MenuItem>;
+                      })
+                    }
+                  </Select>
+                </FormControl>
               </Grid>
             </Grid>
           </Grid>
