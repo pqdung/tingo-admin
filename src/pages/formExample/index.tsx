@@ -66,8 +66,8 @@ const FormExample = () => {
   const columns = useMemo<MRT_ColumnDef<Employee>[]>(
     () => [
       {
-        accessorFn: (row) => `${row.firstName} ${row.lastName}`, //accessorFn used to join multiple data into a single cell
-        id: 'name', //id is still required when using accessorFn instead of accessorKey
+        accessorFn: (row) => `${row.firstName} ${row.lastName}`,
+        id: 'name',
         header: t('Name'),
         flex: 2.5,
         Cell: ({ renderedCellValue, row }) => (
@@ -77,13 +77,12 @@ const FormExample = () => {
               alignItems: 'center',
               gap: '1rem',
             }}>
-            {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
             <span>{renderedCellValue}</span>
           </Box>
         ),
       },
       {
-        accessorKey: 'email', //accessorKey used to define `data` column. `id` gets set to accessorKey automatically
+        accessorKey: 'email',
         enableClickToCopy: true,
         header: t('Email'),
         flex: 3,
@@ -94,7 +93,6 @@ const FormExample = () => {
         filterVariant: 'range',
         header: t('Transaction Amount'),
         flex: 2,
-        //custom conditional format and styling
         Cell: ({ cell }) => (
           <Box
             component="span"
@@ -118,7 +116,6 @@ const FormExample = () => {
         filterVariant: 'range',
         header: t('Commission Amount'),
         flex: 2,
-        //custom conditional format and styling
         Cell: ({ cell }) => (
           <Box
             component="span"
@@ -138,18 +135,18 @@ const FormExample = () => {
         ),
       },
       {
-        accessorKey: 'typeTransaction', //hey a simple column for once
+        accessorKey: 'typeTransaction',
         header: t('Type Transaction'),
         flex: 3.5,
       },
       {
-        accessorFn: (row) => new Date(row.transactonDate), //convert to Date for sorting and filtering
+        accessorFn: (row) => new Date(row.transactonDate),
         id: 'transactonDate',
         header: t('Transaction Date'),
         filterFn: 'lessThanOrEqualTo',
         sortingFn: 'datetime',
-        Cell: ({ cell }) => cell.getValue<Date>()?.toLocaleDateString(), //render Date as a string
-        Header: ({ column }) => <em>{column.columnDef.header}</em>, //custom header markup
+        Cell: ({ cell }) => cell.getValue<Date>()?.toLocaleDateString(),
+        Header: ({ column }) => <em>{column.columnDef.header}</em>,
       },
     ],
     []
@@ -158,8 +155,8 @@ const FormExample = () => {
   const onClear = () => {
     setValues({
       query: '',
-      dateFrom: new Date(),
-      dateTo: new Date(),
+      dateFrom: null,
+      dateTo: null,
       minTransactionAmount: null,
       maxTransactionAmount: null,
       typeTransaction: 'ALL',
@@ -167,7 +164,54 @@ const FormExample = () => {
   };
 
   const onSearch = async () => {
-    setDataTable(data);
+    let dataQuery = !!values.query
+      ? data.filter(
+          (el: Employee) =>
+            `${el.firstName} ${el.lastName}`.includes(values.query) ||
+            el.email === values.query
+        )
+      : data;
+    let dataDateFrom = !!values.dateFrom
+      ? dataQuery.filter(
+          (el: Employee) =>
+            `${el.firstName} ${el.lastName}`.includes(values.query) ||
+            el.email === values.query
+        )
+      : dataQuery;
+
+    let dataDateTo = !!values.dateTo
+      ? dataDateFrom.filter((el: Employee) =>
+          moment(el.transactonDate).isBefore(moment(values.dateTo))
+        )
+      : dataDateFrom;
+
+    let datamMinTransactionAmount = !!values.minTransactionAmount
+      ? dataDateTo.filter(
+          (el: Employee) =>
+            el.transactionAmount >= Number(values.minTransactionAmount)
+        )
+      : dataDateTo;
+
+    let dataMaxTransactionAmount = !!values.maxTransactionAmount
+      ? datamMinTransactionAmount.filter(
+          (el: Employee) =>
+            el.transactionAmount <= Number(values.maxTransactionAmount)
+        )
+      : datamMinTransactionAmount;
+
+    let dataType =
+      values.typeTransaction === TYPE_TRANSACTION.DOMESTIC
+        ? dataMaxTransactionAmount.filter(
+            (el: Employee) => el.typeTransaction === TYPE_TRANSACTION.DOMESTIC
+          )
+        : values.typeTransaction === TYPE_TRANSACTION.INTERNATIONAL
+        ? dataMaxTransactionAmount.filter(
+            (el: Employee) =>
+              el.typeTransaction === TYPE_TRANSACTION.INTERNATIONAL
+          )
+        : dataMaxTransactionAmount;
+
+    setDataTable(dataType);
   };
 
   const handleImportFile = (e: any) => {
