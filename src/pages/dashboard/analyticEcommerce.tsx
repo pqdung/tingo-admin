@@ -63,14 +63,14 @@ export default function AnalyticEcommerce({
       </Stack>
       <Box sx={{ pt: 2.25 }}>
         <Typography variant="caption" color="textSecondary">
-          {t('You made an extra')}{' '}
+          {t('titleAnalytic1')}{' '}
           <Typography
             component="span"
             variant="caption"
             sx={{ color: `${color || 'primary'}.main` }}>
             {extra}
           </Typography>{' '}
-          {t('this year')}
+          {t('titleAnalytic2')}
         </Typography>
       </Box>
     </MainCard>

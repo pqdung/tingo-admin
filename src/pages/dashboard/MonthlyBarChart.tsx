@@ -53,7 +53,7 @@ export default function MonthlyBarChart() {
   useEffect(() => {
     setOptions((prevState: any) => ({
       ...prevState,
-      colors: ['#74e0da'],
+      colors: [info],
       tooltip: {
         theme: 'light',
       },

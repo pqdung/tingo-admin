@@ -81,7 +81,7 @@ export default function ReportAreaChart() {
 
   const [series] = useState([
     {
-      name: t('Series 1'),
+      name: t('Series'),
       data: [58, 115, 28, 83, 63, 75, 35, 55],
     },
   ]);
