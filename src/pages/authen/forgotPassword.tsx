@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useStyles } from "../../layouts/styles/makeTheme";
 import { Box, Button, Grid, TextField } from "@mui/material";
-import TLoading from "./TLoading";
+import TLoading from "../../components/common/TLoading";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import loginLogo from "../../assets/images/loginLogo.svg";
 import { useTranslation } from "react-i18next";
 import { Error } from "@mui/icons-material";
 
-export function ForgotPassword(this: any) {
+export default function ForgotPassword(this: any) {
   const classes = useStyles();
   const { t } = useTranslation(['account']);
   const [loading, setLoading] = useState(false);

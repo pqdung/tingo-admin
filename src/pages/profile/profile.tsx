@@ -38,7 +38,7 @@ function a11yProps(index: number) {
   };
 }
 
-export function Profile() {
+export default function Profile() {
   const [value, setValue] = useState(0);
   const { t } = useTranslation('profile');
 

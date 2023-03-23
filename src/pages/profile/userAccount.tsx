@@ -1,25 +1,32 @@
-import { Alert, Button, Grid, Snackbar, TextField } from "@mui/material";
-import React, { useState } from "react";
-import { objectNullOrEmpty } from "../../utils/utils";
+import { Alert, Button, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { adminRole, objectNullOrEmpty } from "../../utils/utils";
 import { useStyles } from "../../layouts/styles/makeTheme";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { AuthenticationService } from "../../services/access/AuthenticationService";
 import { User } from "../../models/user-interface";
 import { useTranslation } from "react-i18next";
 import { Error } from "@mui/icons-material";
+import { USER_ROLE } from "../../utils/enum/comonEnum";
 
 export function UserAccount() {
   const classes = useStyles();
   const { t } = useTranslation(['profile', 'account']);
   const [openPopupModal, setOpenPopupModal] = React.useState<boolean>(false);
   const [currentUser] = useState(AuthenticationService.getCurrentUser());
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm({
     defaultValues: {
       fullName: objectNullOrEmpty(currentUser) ? '' : currentUser.fullName,
       email: objectNullOrEmpty(currentUser) ? '' : currentUser.email,
       role: objectNullOrEmpty(currentUser) ? '' : currentUser.role,
     }
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setValue('role', objectNullOrEmpty(currentUser) ? '' : currentUser.role);
+    }, 2000);
+  }, [setValue]);
 
   const handleSaveAccount = (data: any) => {
     let currentUser: User = AuthenticationService.getCurrentUser();
@@ -92,16 +99,33 @@ export function UserAccount() {
               }
             </Grid>
             <Grid item xs={12}>
-              <TextField {...register('role', {
-                required: t('enterRole', { ns: 'account' }).toString()
-              })}
-                         className={classes.MTextField}
-                         id={"role"}
-                         name={"role"}
-                         label={t('role')}
-                         size={'small'}
-                         fullWidth
-              />
+              <FormControl fullWidth className={classes.MSelect} sx={{ margin: '10px' }}>
+                <InputLabel id={'label-role'}>{t('role')}</InputLabel>
+                <Select
+                  disabled
+                  {...register('role', {
+                    required: t('enterRole', { ns: 'account' }).toString(),
+                  })}
+                  id={'role'}
+                  labelId={'label-role'}
+                  label={t('role')}
+                  size={'small'}
+                  defaultValue={objectNullOrEmpty(currentUser) ? '' : currentUser.role}
+                  onChange={(e) => {
+                    setValue('role', e.target.value)
+                  }}
+                >
+                  <MenuItem value={USER_ROLE.ADMIN}>
+                    {'Admin'}
+                  </MenuItem>
+                  <MenuItem value={USER_ROLE.MANAGER}>
+                    {'Manager'}
+                  </MenuItem>
+                  <MenuItem value={USER_ROLE.USER}>
+                    {'User'}
+                  </MenuItem>
+                </Select>
+              </FormControl>
               {
                 errors.role && <div className={classes.MTextValidate}>
                       <Error sx={{ fontSize: 'large' }}/>

@@ -22,7 +22,7 @@ import IncomeAreaChart from './barChart';
 import MonthlyBarChart from './MonthlyBarChart';
 import ReportAreaChart from './reportAreChart';
 import SalesColumnChart from './saleColumnChart';
-import MainCard from '../../components/mainCard';
+import MainCard from '../../components/common/mainCard';
 import AnalyticEcommerce from './analyticEcommerce';
 import { useTranslation } from 'react-i18next';
 

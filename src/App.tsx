@@ -7,7 +7,7 @@ import ContainerRouter from "./routes/ContainerRouter";
 function App() {
   return (
     <Provider store={store}>
-      <Suspense fallback="loading">
+      <Suspense fallback={'...'}>
         <ContainerRouter/>
       </Suspense>
     </Provider>

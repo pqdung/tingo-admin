@@ -4,7 +4,7 @@ import { Box, Button, FormControl, Grid, MenuItem, Select, TextField, Typography
 import { useEffect, useState } from "react";
 import { objectNullOrEmpty } from "../../utils/utils";
 import { AuthenticationService } from "../../services/access/AuthenticationService";
-import TLoading from "./TLoading";
+import TLoading from "../../components/common/TLoading";
 import { useForm } from "react-hook-form";
 import loginLogo from '../../assets/images/loginLogo.svg';
 import { NavLink } from "react-router-dom";
@@ -27,7 +27,7 @@ const lstLocale = [
   }
 ];
 
-export function Login() {
+export default function Login() {
   const classes = useStyles();
   const { t } = useTranslation(['account']);
   const [errorLogin, setErrorLogin] = useState<any>({});

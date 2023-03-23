@@ -18,17 +18,16 @@ import ListItemText from '@mui/material/ListItemText';
 import { useStyles } from "./styles/makeTheme";
 import { Avatar, Menu, MenuItem } from "@mui/material";
 import {
-  Dashboard, Equalizer,
-  Launch,
+  Dashboard, Equalizer, Group,
   Logout,
   Person,
   Settings
 } from "@mui/icons-material";
 import { AuthenticationService } from "../services/access/AuthenticationService";
-import { objectNullOrEmpty } from "../utils/utils";
+import { objectNullOrEmpty, userRole, viewPermission } from "../utils/utils";
 import { User } from "../models/user-interface";
 import { useEffect, useState } from "react";
-import TLoading from "../pages/authen/TLoading";
+import TLoading from "../components/common/TLoading";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import enLocale from '../assets/images/enLocale.png';
@@ -192,7 +191,7 @@ export default function Layout({ children }: Props) {
   }
 
   const onNavigateToPage = (path: string) => {
-    navigate(path);
+    navigate(path, { replace: true });
   };
 
   const genSidebarItem = (item: string, path: string, icon: any) => {
@@ -252,7 +251,7 @@ export default function Layout({ children }: Props) {
             </IconButton>
             <Menu
               anchorEl={anchorElLocale}
-              id="account-menu"
+              id="language-menu"
               open={openLocaleMenu}
               onClose={handleLocaleMenuClose}
               onClick={handleLocaleMenuClose}
@@ -302,7 +301,7 @@ export default function Layout({ children }: Props) {
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-              <MenuItem onClick={handleUserMenuClose}>
+              <MenuItem>
                 {t('hi')}&nbsp;<Typography><b>{genCurrentUserName()}</b></Typography>
               </MenuItem>
               <Divider/>
@@ -341,11 +340,8 @@ export default function Layout({ children }: Props) {
         <Divider/>
         <List>
           {genSidebarItem(t('profile'), '/profile', <Person/>)}
-          {genSidebarItem(t('statistic'), '/statistic', <Equalizer/>)}
-        </List>
-        <Divider/>
-        <List>
-          {genSidebarItem(t('documentation'), '/', <Launch/>)}
+          {!userRole() ? genSidebarItem(t('userManagement'), '/user-management', <Group/>) : <></>}
+          {viewPermission() ? genSidebarItem(t('formExample'), '/form-example', <Equalizer/>) : <></>}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

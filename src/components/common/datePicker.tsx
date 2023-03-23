@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useStyles } from '../layouts/styles/makeTheme';
+import { useStyles } from '../../layouts/styles/makeTheme';
 
 interface DatePickerProps {
   handleOnChange: (value: any) => void;

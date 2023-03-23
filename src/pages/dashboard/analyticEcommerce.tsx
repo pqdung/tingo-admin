@@ -1,7 +1,7 @@
 import { Box, Chip, Grid, Stack, Typography } from '@mui/material';
 import ApiOutlinedIcon from '@mui/icons-material/ApiOutlined';
 import WaterfallChartOutlinedIcon from '@mui/icons-material/WaterfallChartOutlined';
-import MainCard from '../../components/mainCard';
+import MainCard from '../../components/common/mainCard';
 import { useTranslation } from 'react-i18next';
 
 interface Props {

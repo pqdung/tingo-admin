@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useStyles } from "../../layouts/styles/makeTheme";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import TLoading from "./TLoading";
+import TLoading from "../../components/common/TLoading";
 import { useForm } from "react-hook-form";
 import registerLogo from '../../assets/images/registerLogo.svg';
 import { NavLink } from "react-router-dom";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Error } from "@mui/icons-material";
 
-export function Signup(this: any) {
+export default function Signup(this: any) {
   const classes = useStyles();
   const { t } = useTranslation(['account']);
   const [loading, setLoading] = useState(false);

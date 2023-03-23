@@ -3,7 +3,7 @@ import { NumericFormat, NumericFormatProps } from 'react-number-format';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Typography } from '@mui/material';
-import { useStyles } from '../layouts/styles/makeTheme';
+import { useStyles } from '../../layouts/styles/makeTheme';
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;

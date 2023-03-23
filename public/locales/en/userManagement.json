@@ -1,0 +1,15 @@
+{
+  "userList": "User list",
+  "no": "No.",
+  "user": "User",
+  "role": "Role",
+  "roleAndPermission": "Role & Permission",
+  "permission": "Permission",
+  "view": "View",
+  "edit": "Edit",
+  "admin": "Admin",
+  "manager": "Manager",
+  "saveSuccess": "Save successfully!",
+  "save": "Save",
+  "cancel": "Cancel"
+}

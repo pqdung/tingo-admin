@@ -4,7 +4,7 @@ import CommissionManage from './dashboard';
 
 type Props = {};
 
-export function Home(props: Props) {
+export default function Home(props: Props) {
   return (
     <div style={{ backgroundColor: '#fafafb' }}>
       <CommissionManage />

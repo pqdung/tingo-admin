@@ -1,0 +1,62 @@
+[
+  {
+    "username": "admin",
+    "password": "123",
+    "fullName": "ADMIN",
+    "email": "admin@gmail.com",
+    "phone": "0988888888",
+    "role": "1",
+    "accessToken": "admin123",
+    "validTo": 0,
+    "isLogin": "false",
+    "permission": {
+      "view": true,
+      "edit": true
+    }
+  },
+  {
+    "username": "tingo1",
+    "password": "123",
+    "fullName": "TINGO 1",
+    "email": "tingo1@gmail.com",
+    "phone": "0966666666",
+    "role": "2",
+    "accessToken": "tingo123",
+    "validTo": 0,
+    "isLogin": "false",
+    "permission": {
+      "view": false,
+      "edit": false
+    }
+  },
+  {
+    "username": "tingo2",
+    "password": "123",
+    "fullName": "TINGO 2",
+    "email": "tingo2@gmail.com",
+    "phone": "0966666666",
+    "role": "3",
+    "accessToken": "tingo123",
+    "validTo": 0,
+    "isLogin": "false",
+    "permission": {
+      "view": false,
+      "edit": false
+    }
+  },
+  {
+    "username": "tingo3",
+    "password": "123",
+    "fullName": "TINGO 3",
+    "email": "tingo3@gmail.com",
+    "phone": "0966666666",
+    "role": "3",
+    "accessToken": "tingo123",
+    "validTo": 0,
+    "isLogin": "false",
+    "permission": {
+      "view": false,
+      "edit": false
+    }
+  }
+]

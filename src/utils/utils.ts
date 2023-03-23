@@ -1,3 +1,6 @@
+import { AuthenticationService } from "../services/access/AuthenticationService";
+import { USER_ROLE } from "./enum/comonEnum";
+
 export const onChange = (setValues: any, values: Object, event: any) => {
   const value = event.target.value;
   setValues({ ...values, [event.target.name]: value });
@@ -23,4 +26,26 @@ export const objectNullOrEmpty = (object: object) => {
     }
     return true;
   }
+};
+
+export const viewPermission = () => {
+  const currentUser = AuthenticationService.getCurrentUser();
+  return !objectNullOrEmpty(currentUser) && currentUser.permission.view;
+
+};
+
+export const editPermission = () => {
+  const currentUser = AuthenticationService.getCurrentUser();
+  return !objectNullOrEmpty(currentUser) && currentUser.permission.edit;
+
+};
+
+export const adminRole = () => {
+  const currentUser = AuthenticationService.getCurrentUser();
+  return !objectNullOrEmpty(currentUser) && USER_ROLE.ADMIN === currentUser.role;
+};
+
+export const userRole = () => {
+  const currentUser = AuthenticationService.getCurrentUser();
+  return !objectNullOrEmpty(currentUser) && USER_ROLE.USER === currentUser.role;
 };

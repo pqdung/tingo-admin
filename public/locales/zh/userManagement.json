@@ -1,0 +1,15 @@
+{
+  "userList": "用户列表",
+  "no": "不.",
+  "user": "用户",
+  "role": "角色",
+  "roleAndPermission": "角色和权限",
+  "permission": "允许",
+  "view": "看法",
+  "edit": "编辑",
+  "admin": "行政",
+  "manager": "经理",
+  "saveSuccess": "保存成功!",
+  "save": "节省",
+  "cancel": "取消"
+}

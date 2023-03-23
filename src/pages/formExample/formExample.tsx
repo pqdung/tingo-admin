@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 //MRT Imports
 import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table';
@@ -24,12 +24,15 @@ import moment from 'moment';
 import { data } from '../../fakeData/dataStatistic';
 import { useTranslation } from 'react-i18next';
 import { useStyles } from '../../layouts/styles/makeTheme';
-import { TYPE_TRANSACTION } from '../../utils/enum/comonEnum';
-import { onChange, onChangeDate } from '../../utils/utils';
-import MainCard from '../../components/mainCard';
-import DatePickerDefault from '../../components/datePicker';
-import i18n from '../../locales/i18n';
-import InputNumberFormat from '../../components/inputNumberFormat';
+import { PREFIX_LOCALE, TYPE_TRANSACTION } from '../../utils/enum/comonEnum';
+import { onChange, onChangeDate, stringNullOrEmpty } from '../../utils/utils';
+import MainCard from '../../components/common/mainCard';
+import DatePickerDefault from '../../components/common/datePicker';
+import i18n from "i18next";
+import InputNumberFormat from '../../components/common/inputNumberFormat';
+
+import { MRT_Localization_EN } from 'material-react-table/locales/en';
+import { MRT_Localization_ZH_HANS } from 'material-react-table/locales/zh-Hans';
 
 export type Employee = {
   firstName: string;
@@ -62,6 +65,22 @@ const FormExample = () => {
     maxTransactionAmount: null,
     typeTransaction: 'ALL',
   });
+  const [currentLocale, setCurrentLocale] = useState(MRT_Localization_EN);
+
+  useEffect(()=>{
+    if(!stringNullOrEmpty(i18n.language)) {
+      switch (i18n.language) {
+        case PREFIX_LOCALE.EN:
+          setCurrentLocale(MRT_Localization_EN);
+          break;
+        case PREFIX_LOCALE.ZH:
+          setCurrentLocale(MRT_Localization_ZH_HANS);
+          break;
+        default:
+          break;
+      }
+    }
+  },[i18n.language]);
 
   const [dataTable, setDataTable] = useState<Employee[]>(data);
 
@@ -339,7 +358,7 @@ const FormExample = () => {
                 mb={-1}>
                 {t('typeOfTransaction')}
               </Typography>
-              <FormControl fullWidth className={classes.Mselect}>
+              <FormControl fullWidth className={classes.MSelect}>
                 <Select
                   id="typeTransaction"
                   name="typeTransaction"
@@ -402,6 +421,7 @@ const FormExample = () => {
       </Grid>
       <Grid item xs={12}>
         <MaterialReactTable
+          localization={currentLocale}
           columns={columns}
           data={dataTable}
           enableRowSelection

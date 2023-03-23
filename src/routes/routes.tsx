@@ -1,15 +1,18 @@
-import { Home } from '../pages/home';
-import { Profile } from '../pages/profile/profile';
-import { Login } from '../pages/authen/login';
-import { Signup } from '../pages/authen/signup';
-import { ForgotPassword } from '../pages/authen/forgotPassword';
-import StatisticDefault from '../pages/formExample';
+import React from "react";
+
+const Home = React.lazy(() => import('../pages/home'));
+const UserManagement = React.lazy(() => import('../pages/user-management/userManagement'));
+const FormExample = React.lazy(() => import('../pages/formExample/formExample'));
+const Profile = React.lazy(() => import('../pages/profile/profile'));
+const Login = React.lazy(() => import('../pages/authen/login'));
+const Signup = React.lazy(() => import('../pages/authen/signup'));
+const ForgotPassword = React.lazy(() => import('../pages/authen/forgotPassword'));
 
 const routes = [
   { path: '/', component: Home },
+  { path: '/user-management', component: UserManagement },
   { path: '/profile', component: Profile },
-  { path: '/profile', component: Profile },
-  { path: '/statistic', component: StatisticDefault },
+  { path: '/form-example', component: FormExample }
 ];
 
 const accountRoutes = [
