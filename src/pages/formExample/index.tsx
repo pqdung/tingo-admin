@@ -28,6 +28,8 @@ import { TYPE_TRANSACTION } from '../../utils/enum/comonEnum';
 import { onChange, onChangeDate } from '../../utils/utils';
 import MainCard from '../../components/mainCard';
 import DatePickerDefault from '../../components/datePicker';
+import i18n from '../../locales/i18n';
+import InputNumberFormat from '../../components/inputNumberFormat';
 
 export type Employee = {
   firstName: string;
@@ -35,7 +37,7 @@ export type Employee = {
   email: string;
   typeTransaction: string;
   transactionAmount: number;
-  transactonDate: string;
+  transactionDate: string;
   signatureCatchPhrase: string;
   commissionAmount: number;
 };
@@ -68,7 +70,7 @@ const FormExample = () => {
       {
         accessorFn: (row) => `${row.firstName} ${row.lastName}`,
         id: 'name',
-        header: t('Name'),
+        header: t('name'),
         flex: 2.5,
         Cell: ({ renderedCellValue, row }) => (
           <Box
@@ -84,14 +86,14 @@ const FormExample = () => {
       {
         accessorKey: 'email',
         enableClickToCopy: true,
-        header: t('Email'),
+        header: t('email'),
         flex: 3,
       },
 
       {
         accessorKey: 'transactionAmount',
         filterVariant: 'range',
-        header: t('Transaction Amount'),
+        header: t('transactionAmount'),
         flex: 2,
         Cell: ({ cell }) => (
           <Box
@@ -114,7 +116,7 @@ const FormExample = () => {
       {
         accessorKey: 'commissionAmount',
         filterVariant: 'range',
-        header: t('Commission Amount'),
+        header: t('commissionAmount'),
         flex: 2,
         Cell: ({ cell }) => (
           <Box
@@ -136,20 +138,20 @@ const FormExample = () => {
       },
       {
         accessorKey: 'typeTransaction',
-        header: t('Type Transaction'),
+        header: t('typeTransaction'),
         flex: 3.5,
       },
       {
-        accessorFn: (row) => new Date(row.transactonDate),
-        id: 'transactonDate',
-        header: t('Transaction Date'),
+        accessorFn: (row) => new Date(row.transactionDate),
+        id: 'transactionDate',
+        header: t('transactionDate'),
         filterFn: 'lessThanOrEqualTo',
         sortingFn: 'datetime',
         Cell: ({ cell }) => cell.getValue<Date>()?.toLocaleDateString(),
         Header: ({ column }) => <em>{column.columnDef.header}</em>,
       },
     ],
-    []
+    [i18n.language]
   );
 
   const onClear = () => {
@@ -172,16 +174,14 @@ const FormExample = () => {
         )
       : data;
     let dataDateFrom = !!values.dateFrom
-      ? dataQuery.filter(
-          (el: Employee) =>
-            `${el.firstName} ${el.lastName}`.includes(values.query) ||
-            el.email === values.query
+      ? dataQuery.filter((el: Employee) =>
+          moment(el.transactionDate).isAfter(moment(values.dateFrom))
         )
       : dataQuery;
 
     let dataDateTo = !!values.dateTo
       ? dataDateFrom.filter((el: Employee) =>
-          moment(el.transactonDate).isBefore(moment(values.dateTo))
+          moment(el.transactionDate).isBefore(moment(values.dateTo))
         )
       : dataDateFrom;
 
@@ -244,7 +244,7 @@ const FormExample = () => {
   return (
     <Grid container rowSpacing={2} columnSpacing={2.75}>
       <Grid item xs={12}>
-        <Typography variant="h5">{t('Example form')}</Typography>
+        <Typography variant="h5">{t('exampleForm')}</Typography>
       </Grid>
       <Grid item xs={12}>
         <MainCard content={false} sx={{ p: 3 }}>
@@ -256,7 +256,7 @@ const FormExample = () => {
                 component="div"
                 ml={1}
                 mb={-1}>
-                {t('Name or Email')}
+                {t('nameOrEmail')}
               </Typography>
               <TextField
                 id="query"
@@ -275,7 +275,7 @@ const FormExample = () => {
                 component="div"
                 ml={1}
                 mb={-1}>
-                {t('Date from')}
+                {t('dateFrom')}
               </Typography>
               <DatePickerDefault
                 handleOnChange={onChangeDate.bind(
@@ -294,7 +294,7 @@ const FormExample = () => {
                 component="div"
                 ml={1}
                 mb={-1}>
-                {t('Date to')}
+                {t('dateTo')}
               </Typography>
               <DatePickerDefault
                 handleOnChange={onChangeDate.bind(
@@ -307,53 +307,27 @@ const FormExample = () => {
               />
             </Grid>
             <Grid item xs={4}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                component="div"
-                ml={1}
-                mb={-1}>
-                {t('Minimum transaction amount')}
-              </Typography>
-              <TextField
-                id="minTransactionAmount"
-                name="minTransactionAmount"
-                type={'number'}
-                className={classes.MTextField}
+              <InputNumberFormat
+                handleChange={(e: any) => {
+                  setValues({
+                    ...values,
+                    minTransactionAmount: Number(e.target.value),
+                  });
+                }}
+                title={t('minimumTransactionAmount')}
                 value={values.minTransactionAmount}
-                sx={{ width: '80%' }}
-                size={'small'}
-                onChange={onChange.bind(this, setValues, values)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">$</InputAdornment>
-                  ),
-                }}
               />
             </Grid>
             <Grid item xs={4}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                component="div"
-                ml={1}
-                mb={-1}>
-                {t('Maximum transaction amount')}
-              </Typography>
-              <TextField
-                id="maxTransactionAmount"
-                name="maxTransactionAmount"
-                type={'number'}
-                className={classes.MTextField}
+              <InputNumberFormat
+                handleChange={(e: any) => {
+                  setValues({
+                    ...values,
+                    maxTransactionAmount: Number(e.target.value),
+                  });
+                }}
+                title={t('maximumTransactionAmount')}
                 value={values.maxTransactionAmount}
-                sx={{ width: '80%' }}
-                size={'small'}
-                onChange={onChange.bind(this, setValues, values)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">$</InputAdornment>
-                  ),
-                }}
               />
             </Grid>
             <Grid item xs={4}>
@@ -363,7 +337,7 @@ const FormExample = () => {
                 component="div"
                 ml={1}
                 mb={-1}>
-                {t('Type of transaction')}
+                {t('typeOfTransaction')}
               </Typography>
               <FormControl fullWidth className={classes.Mselect}>
                 <Select
@@ -374,12 +348,12 @@ const FormExample = () => {
                   value={values.typeTransaction}
                   onChange={onChange.bind(this, setValues, values)}
                   inputProps={{ 'aria-label': 'Without label' }}>
-                  <MenuItem value={'ALL'}>{t('All')}</MenuItem>
+                  <MenuItem value={'ALL'}>{t('all')}</MenuItem>
                   <MenuItem value={TYPE_TRANSACTION.DOMESTIC}>
-                    {t('Domestic')}
+                    {t('domestic')}
                   </MenuItem>
                   <MenuItem value={TYPE_TRANSACTION.INTERNATIONAL}>
-                    {t('International')}
+                    {t('international')}
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -401,7 +375,7 @@ const FormExample = () => {
                   className={classes.MbtnSearch}
                   sx={{ width: 126 }}
                   component="span">
-                  {t('Import')}
+                  {t('import')}
                 </Button>
               </label>
               <Button
@@ -411,7 +385,7 @@ const FormExample = () => {
                 className={classes.MbtnClear}
                 color="warning"
                 onClick={onClear}>
-                {t('Clear')}
+                {t('clear')}
               </Button>
               <Button
                 data-testid="testId-btnSearch"
@@ -420,7 +394,7 @@ const FormExample = () => {
                 sx={{ width: '126px', height: '40px', ml: 2 }}
                 className={classes.MbtnSearch}
                 onClick={onSearch}>
-                {t('Search')}
+                {t('search')}
               </Button>
             </Grid>
           </Grid>
@@ -444,7 +418,7 @@ const FormExample = () => {
                     transactionAmount: row.original.transactionAmount,
                     commissionAmount: row.original.commissionAmount,
                     typeTransaction: row.original.typeTransaction,
-                    transactionDate: row.original.transactonDate,
+                    transactionDate: row.original.transactionDate,
                   };
                 });
               const ws = utils.json_to_sheet(dataExport);
@@ -463,7 +437,7 @@ const FormExample = () => {
                   disabled={!table.getIsSomeRowsSelected()}
                   onClick={handleDeactivate}
                   variant="contained">
-                  {t('Export Data')}
+                  {t('exportData')}
                 </Button>
               </div>
             );

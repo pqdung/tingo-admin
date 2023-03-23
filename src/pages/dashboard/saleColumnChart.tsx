@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import ReactApexChart from 'react-apexcharts';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../locales/i18n';
 
 interface Props {
   type: string;
@@ -88,11 +89,11 @@ export default function SalesColumnChart({ type }: Props) {
 
   const [series, setSeries] = useState([
     {
-      name: t('Net Profit'),
+      name: t('netProfit'),
       data: [14, 20, 30, 16, 8, 11, 9],
     },
     {
-      name: t('Revenue'),
+      name: t('revenue'),
       data: [20, 16, 14, 24, 12, 15, 11],
     },
   ]);
@@ -126,7 +127,7 @@ export default function SalesColumnChart({ type }: Props) {
     }));
     setSeries([
       {
-        name: t('Net Profit'),
+        name: t('netProfit'),
         data:
           type === 'month'
             ? [180, 90, 135, 114, 120, 145, 350, 440, 120, 600, 240, 80]
@@ -135,7 +136,7 @@ export default function SalesColumnChart({ type }: Props) {
             : [14, 20, 30, 16, 8, 11, 9],
       },
       {
-        name: t('Revenue'),
+        name: t('revenue'),
         data:
           type === 'month'
             ? [120, 45, 78, 150, 168, 99, 120, 30, 300, 280, 150, 50]
@@ -144,7 +145,7 @@ export default function SalesColumnChart({ type }: Props) {
             : [20, 16, 14, 24, 12, 15, 11],
       },
     ]);
-  }, [type]);
+  }, [type, i18n.language]);
 
   useEffect(() => {
     setOptions((prevState: any) => ({
