@@ -1,0 +1,22 @@
+{
+  "Example form": "范例表格",
+  "Name or Email": "姓名或电子邮件",
+  "Date from": "日期从",
+  "Date to": "日期至",
+  "Minimum transaction amount": "最低交易金额",
+  "Maximum transaction amount": "最大交易金额",
+  "Type of transaction": "交易类型",
+  "Domestic": "国内的",
+  "International": "国际的",
+  "All": "全部",
+  "Import": "进口",
+  "Clear": "清除",
+  "Search": "搜索",
+  "Export Data": "导出数据",
+  "Name": "姓名",
+  "Email": "电子邮件",
+  "Transaction Amount": "交易金额",
+  "Commission Amount": "佣金金额",
+  "Type Transaction": "交易类型",
+  "Transaction Date": "交易日期"
+}

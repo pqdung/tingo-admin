@@ -1,4 +1,4 @@
 export enum TYPE_TRANSACTION {
-  INLAND = 'inland',
+  DOMESTIC = 'domestic',
   INTERNATIONAL = 'international',
 }
