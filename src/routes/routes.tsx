@@ -1,12 +1,15 @@
-import { Home } from "../pages/home";
-import { Profile } from "../pages/profile/profile";
-import { Login } from "../pages/authen/login";
-import { Signup } from "../pages/authen/signup";
-import { ForgotPassword } from "../pages/authen/forgotPassword";
+import { Home } from '../pages/home';
+import { Profile } from '../pages/profile/profile';
+import { Login } from '../pages/authen/login';
+import { Signup } from '../pages/authen/signup';
+import { ForgotPassword } from '../pages/authen/forgotPassword';
+import StatisticDefault from '../pages/formExample';
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/profile', component: Profile }
+  { path: '/profile', component: Profile },
+  { path: '/profile', component: Profile },
+  { path: '/statistic', component: StatisticDefault },
 ];
 
 const accountRoutes = [

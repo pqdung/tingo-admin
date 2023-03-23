@@ -85,7 +85,33 @@ const useStyles = makeStyles({
     height: '16px',
     margin: '-2px 5px !important',
     display: 'inline-block',
-  }
+  },
+  Mselect: {
+    '& .css-y4ygc1-MuiInputBase-root-MuiOutlinedInput-root': {
+      borderRadius: '5px !important',
+      // padding: "4px 4px 4px 8px",
+    },
+    '& .MuiOutlinedInput-root': {
+      borderRadius: '5px !important',
+    },
+    '& .Mui-disabled': {
+      background: '#EAEBEB',
+    },
+  },
+  MbtnSearch: {
+    borderRadius: '4px !important',
+    width: '130px',
+    height: '40px',
+  },
+  MbtnClear: {
+    borderRadius: '5px !important',
+    color: '#fff',
+    width: '130px',
+    height: '40px',
+    '&:hover': {
+      backgroundColor: '#676767',
+    },
+  },
 });
 
 export { useStyles };

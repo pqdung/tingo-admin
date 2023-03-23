@@ -1,0 +1,22 @@
+{
+  "Example form": "Example form",
+  "Name or Email": "Name or Email",
+  "Date from": "Date from",
+  "Date to": "Date to",
+  "Minimum transaction amount": "Minimum transaction amount",
+  "Maximum transaction amount": "Maximum transaction amount",
+  "Type of transaction": "Type of transaction",
+  "Domestic": "Domestic",
+  "International": "International",
+  "All": "All",
+  "Import": "Import",
+  "Clear": "Clear",
+  "Search": "Search",
+  "Export Data": "Export Data",
+  "Name": "Name",
+  "Email": "Email",
+  "Transaction Amount": "Transaction Amount",
+  "Commission Amount": "Commission Amount",
+  "Type Transaction": "Type Transaction",
+  "Transaction Date": "Transaction Date"
+}

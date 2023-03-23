@@ -1,13 +1,5 @@
 {
-  "hi": "你好",
-  "profile": "轮廓",
-  "setting": "环境",
-  "logOut": "登出",
   "dashboard": "仪表板",
-  "transaction": "交易",
-  "commission": "委员会",
-  "senderReceiver": "发送者/接收者",
-  "documentation": "文档",
   "statistic": "统计",
   "totalTransaction": "总交易",
   "totalUsers": "用户总数",
@@ -34,5 +26,8 @@
   "Business Risk Cases": "商业风险案例",
   "Help & Support Chat": "帮助和支持聊天",
   "Typical replay within 5 min": "5 分钟内典型回放",
-  "Need Help": "需要帮忙"
+  "Need Help": "需要帮忙",
+  "Series 1": "系列 1",
+  "You made an extra": "你做了一个额外的",
+  "this year": "今年"
 }
