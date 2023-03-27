@@ -1,6 +1,168 @@
-# Getting Started with Create React App
+# Coding convention
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Code language - Typescript
+
+## Main structure in 'src' folder
+**asset**: include asset as: images, ... <br/>
+**components**: include all component of project <br/>
+**layouts**: include all parts or components constitute layout of the web <br/>
+**models**: include files about object model, interface, ... <br/>
+**pages**: only include screens, pages <br/>
+**routes**: include router navigate the pages of the web <br/>
+**services**: include services call API <br/>
+**store**: include redux, store, slice,... <br/>
+**utils**: include files use to handle logic common <br/>
+
+updating...
+
+## Naming conventions
+#### Use PascalCase in components, interfaces, or type aliases
+
+```ts
+// React component
+const BannersEditForm = () => {
+    //...
+}
+
+// Typescript interface
+interface TodoItem {
+  id: number;
+  name: string;
+  value: string;
+}
+
+// Typescript type alias
+type TodoList = TodoItem[];
+```
+
+#### Use camelCase for data types like variables, arrays, objects, functions, etc.
+```ts
+const getLastDigit = () => {
+    //...
+}
+
+const userTypes = [ 
+    //...
+]
+```
+
+#### Use camelCase for folder and non-component file names and PascalCase for component file names
+```ts
+src/utils/form.ts
+src/hooks/useForm.ts
+src/components/banners/edit/Form.tsx
+```
+
+## Component structure
+To keep all the component files consistent, please follow the following pattern:
+
+```tsx
+// 1. Imports - Prefer destructuring imports to minimize writen code
+import React, { PropsWithChildren, useState, useEffect } from "react";
+
+// 2. Types
+type ComponentProps = {
+  someProperty: string;
+};
+
+// 2.1 Interface Props
+interface Props {
+  someProperty: string;
+};
+
+// 3. Styles - with @mui use styled API or sx prop of the component
+const Wrapper = styled("div")(({ theme }) => ({
+  color: theme.palette.white
+}));
+
+// 4. Additional variables
+const SOME_CONSTANT = "something";
+
+// 5. Component
+function Component({ someProperty }: PropsWithChildren<ComponentProps>) {
+  // 5.1 Definitions
+  const [state, setState] = useState(true);
+  const { something } = useSomething();
+
+  // 5.2 Effects
+  // ❌
+  React.useEffect(() => {
+    // ...
+  }, []);
+
+  // ✅
+  useEffect(() => {
+    // ...
+  }, []);
+
+  // 5.3 Functions
+  function handleToggleState() {
+    setState(!state);
+  }
+
+  // 5.4 Additional destructures
+  const { property } = something;
+  
+  return (
+    <div>
+      {/* Separate elements if not closed on the same line to make the code clearer */}
+      {/* ❌ */}
+      <div>
+        <div>
+          <p>Lorem ipsum</p>
+          <p>Pellentesque arcu</p>
+        </div>
+        <p>Lorem ipsum</p>
+        <p>Pellentesque arcu</p>
+      </div>
+      <div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque
+          arcu. Et harum quidem rerum facilis est et expedita distinctio.
+        </p>
+        <p>Pellentesque arcu</p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque
+          arcu. Et harum quidem rerum facilis est et expedita distinctio.
+        </p>
+      </div>
+
+      {/* ✅ */}
+      <Wrapper>
+        <div>
+          <p>Lorem ipsum</p>
+          <p>Pellentesque arcu</p>
+        </div>
+
+        <p>Lorem ipsum</p>
+        <p>Pellentesque arcu</p>
+      </Wrapper>
+
+      <div>
+        <div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+            Pellentesque arcu. Et harum quidem rerum facilis est et expedita
+            distinctio.
+          </p>
+
+          <p>Pellentesque arcu</p>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+            Pellentesque arcu. Et harum quidem rerum facilis est et expedita
+            distinctio.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 6. Exports
+export { Component };
+export type { ComponentProps };
+```
 
 ## Available Scripts
 
