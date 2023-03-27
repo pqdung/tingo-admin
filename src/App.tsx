@@ -1,15 +1,13 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import './App.css';
 import store from "./store/store";
 import { Provider } from "react-redux";
-import ContainerRouter from "./routes/ContainerRouter";
+import Layout from "./layouts/Layout";
 
 function App() {
   return (
     <Provider store={store}>
-      <Suspense fallback={'...'}>
-        <ContainerRouter/>
-      </Suspense>
+      <Layout/>
     </Provider>
   );
 }

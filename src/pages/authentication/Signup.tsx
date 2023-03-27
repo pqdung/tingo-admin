@@ -108,7 +108,7 @@ export default function Signup(this: any) {
               </Grid>
               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <Typography fontSize={'small'} ml={1} mr={1}>{t('hadAccountLabel')} </Typography>
-                <NavLink to={'/'} style={{ textDecoration: 'none' }}>
+                <NavLink to={'/login'} style={{ textDecoration: 'none' }}>
                   <Typography fontSize={'small'}>
                     {t('login')}
                   </Typography>

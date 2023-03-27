@@ -1,28 +1,30 @@
-import DefaultLayout from "../layouts/Layout";
-import { routes, accountRoutes } from "./routes";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { AuthenticationService } from "../services/access/authenticationService";
+import { useEffect } from "react";
 
-function ContainerRouter() {
+interface Props {
+  children: any;
+  isPrivate?: boolean;
+}
+
+const ContainerRouter = ({ children, isPrivate }: Props) => {
+  const navigate = useNavigate();
+  const isLogin = AuthenticationService.isLogin();
+
+  useEffect(() => {
+    if (!isLogin && isPrivate) {
+      navigate('/login');
+    }
+  }, [isLogin]);
+
   return (
     <div>
       <Routes>
         {
-          AuthenticationService.isLogin() ?
-            (
-              routes.map((route: any, index: any) => {
-                const Layout = DefaultLayout;
-                const Page = route.component;
-                return <Route key={index} path={route.path} element={<Layout><Page/></Layout>}/>
-              })
-            )
-            :
-            (
-              (accountRoutes.map((r, ix) => {
-                const Page = r.component;
-                return <Route key={ix} path={r.path} element={<Page/>}/>
-              }))
-            )
+          children.map((route: any, index: any) => {
+            const Page = route.component;
+            return <Route key={index} path={route.path} element={<Page/>}/>
+          })
         }
       </Routes>
     </div>

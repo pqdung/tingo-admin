@@ -1,4 +1,5 @@
 import React from "react";
+import App from "../App";
 
 const Home = React.lazy(() => import('../pages/dashboard/Dashboard'));
 const UserManagement = React.lazy(() => import('../pages/userManagement/UserManagement'));
@@ -8,19 +9,18 @@ const Login = React.lazy(() => import('../pages/authentication/Login'));
 const Signup = React.lazy(() => import('../pages/authentication/Signup'));
 const ForgotPassword = React.lazy(() => import('../pages/authentication/ForgotPassword'));
 
-const routes = [
+const privateRoutes = [
   { path: '/', component: Home },
   { path: '/user-management', component: UserManagement },
   { path: '/profile', component: Profile },
-  { path: '/form-example', component: FormExample }
+  { path: '/form-example', component: FormExample },
 ];
 
-const accountRoutes = [
-  { path: '/', component: Login },
+const publicRoutes = [
   { path: '/login', component: Login },
   { path: '/signup', component: Signup },
   { path: '/forgot-password', component: ForgotPassword },
-  { path: '*', component: Login },
+  { path: '*', component: App },
 ];
 
-export { routes, accountRoutes };
+export { privateRoutes, publicRoutes };

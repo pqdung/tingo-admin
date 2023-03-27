@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Suspense } from 'react';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -33,6 +33,8 @@ import i18n from "i18next";
 import enLocale from '../assets/images/enLocale.png';
 import zhLocale from '../assets/images/zhLocale.png';
 import { useNavigate } from "react-router-dom";
+import ContainerRouter from "../routes/ContainerRouter";
+import { privateRoutes } from "../routes/routes";
 
 const drawerWidth = 240;
 
@@ -118,11 +120,7 @@ const lstLocale = [
   }
 ];
 
-interface Props {
-  children: any;
-}
-
-export default function Layout({ children }: Props) {
+export default function Layout() {
   const classes = useStyles();
   const { t } = useTranslation(['common']);
   const theme = useTheme();
@@ -174,7 +172,8 @@ export default function Layout({ children }: Props) {
     setAnchorElUser(null);
     setLoading(true);
     AuthenticationService.logout();
-    window.location.href = '/';
+    // window.location.href = '/';
+    navigate('/login', { replace: true });
     setLoading(false);
   };
 
@@ -346,7 +345,9 @@ export default function Layout({ children }: Props) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader/>
-        {children}
+        <Suspense fallback="...">
+          <ContainerRouter children={privateRoutes} isPrivate/>
+        </Suspense>
       </Box>
       <TLoading open={loading}/>
     </Box>

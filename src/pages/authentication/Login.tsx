@@ -7,7 +7,7 @@ import { AuthenticationService } from "../../services/access/authenticationServi
 import TLoading from "../../components/common/TLoading";
 import { useForm } from "react-hook-form";
 import loginLogo from '../../assets/images/loginLogo.svg';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 import enLocale from "../../assets/images/enLocale.png";
@@ -30,6 +30,7 @@ const lstLocale = [
 export default function Login() {
   const classes = useStyles();
   const { t } = useTranslation(['account']);
+  const navigate = useNavigate();
   const [errorLogin, setErrorLogin] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -60,7 +61,8 @@ export default function Login() {
       await AuthenticationService.login(data.username, data.password);
       if (AuthenticationService.isLogin()) {
         setErrorLogin({});
-        window.location.href = '/';
+        // window.location.href = '/';
+        navigate('/', { replace: true });
       } else {
         errorLogin.isLogin = false;
         setErrorLogin(errorLogin);
