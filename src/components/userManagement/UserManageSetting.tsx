@@ -11,9 +11,9 @@ import {
   Typography
 } from "@mui/material";
 import { useStyles } from "../../layouts/styles/makeTheme";
-import { USER_ROLE } from "../../utils/enum/comonEnum";
+import { USER_ROLE } from "../../utils/enum/CommonEnum";
 import React, { useEffect, useState } from "react";
-import { adminRole, objectNullOrEmpty } from "../../utils/utils";
+import { adminRole, objectNullOrEmpty } from "../../utils/Utils";
 import { AuthenticationService } from "../../services/access/AuthenticationService";
 import { useTranslation } from "react-i18next";
 
@@ -53,7 +53,6 @@ export default function UserManageSetting(props: Props) {
     if (lstUser && lstUser.length > 0) {
       const lstUserFilter = lstUser.filter((it: any) => it.username !== currentUser.username);
       lstUserFilter.push(currentUser);
-      localStorage.setItem('currentUser', JSON.stringify(currentUser));
       localStorage.setItem('lstUser', JSON.stringify(lstUserFilter));
       setOpenPopupModal(true);
       onClose();

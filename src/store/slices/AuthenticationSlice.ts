@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 // import { authentication } from '../../adapters/keycloak-adapter';
-import { loginForm } from '../../models/user-interface';
+import { loginForm } from '../../models/UserInterface';
 
 type AuthState = {
   token: string | null;
@@ -30,7 +30,7 @@ export const loginKeyCloakAsync = createAsyncThunk('login', async (payload: logi
   return null;
 });
 
-const authSlice = createSlice({
+const authenticationSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
@@ -75,6 +75,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
-export const { refreshTokenState, groupShowSelect } = authSlice.actions;
-export default authSlice.reducer;
+export const { logout } = authenticationSlice.actions;
+export const { refreshTokenState, groupShowSelect } = authenticationSlice.actions;
+export default authenticationSlice.reducer;

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import { AuthenticationService } from "../../services/access/AuthenticationService";
 import { Settings } from "@mui/icons-material";
-import UserManageSetting from "./userManageSetting";
-import { PREFIX_LOCALE, USER_ROLE } from "../../utils/enum/comonEnum";
+import UserManageSetting from "./UserManageSetting";
+import { PREFIX_LOCALE, USER_ROLE } from "../../utils/enum/CommonEnum";
 import MaterialReactTable, { MRT_Row } from "material-react-table";
-import { stringNullOrEmpty } from "../../utils/utils";
+import { stringNullOrEmpty } from "../../utils/Utils";
 import i18n from "i18next";
 
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 
 const _ = require('lodash');
 
-export default function UserManagement() {
+export default function UserManagementList() {
   const { t } = useTranslation(['userManagement']);
   const [lstUser] = useState(AuthenticationService.getListUserLocalStorage);
   const [userRows, setUserRows] = useState<any[]>([]);

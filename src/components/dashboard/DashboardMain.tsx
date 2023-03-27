@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Avatar,
-  AvatarGroup,
   Box,
   Button,
   Grid,
@@ -18,12 +17,12 @@ import {
 import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
 import MessageOutlinedIcon from '@mui/icons-material/MessageOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import IncomeAreaChart from './barChart';
+import IncomeAreaChart from './BarChart';
 import MonthlyBarChart from './MonthlyBarChart';
-import ReportAreaChart from './reportAreChart';
-import SalesColumnChart from './saleColumnChart';
-import MainCard from '../../components/common/mainCard';
-import AnalyticEcommerce from './analyticEcommerce';
+import ReportAreaChart from './ReportAreChart';
+import SalesColumnChart from './SaleColumnChart';
+import MainCard from '../common/MainCard';
+import AnalyticEcommerce from './AnalyticEcommerce';
 import { useTranslation } from 'react-i18next';
 
 const avatarSX = {

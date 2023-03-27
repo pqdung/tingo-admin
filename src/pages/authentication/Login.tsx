@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useStyles } from "../../layouts/styles/makeTheme";
 import { Box, Button, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { objectNullOrEmpty } from "../../utils/utils";
+import { objectNullOrEmpty } from "../../utils/Utils";
 import { AuthenticationService } from "../../services/access/AuthenticationService";
 import TLoading from "../../components/common/TLoading";
 import { useForm } from "react-hook-form";

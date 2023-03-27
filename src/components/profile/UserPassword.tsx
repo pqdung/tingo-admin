@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Error } from "@mui/icons-material";
 import { AuthenticationService } from "../../services/access/AuthenticationService";
-import { objectNullOrEmpty } from "../../utils/utils";
+import { objectNullOrEmpty } from "../../utils/Utils";
 
 export function UserPassword() {
   const classes = useStyles();

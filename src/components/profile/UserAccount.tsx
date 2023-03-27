@@ -1,20 +1,20 @@
 import { Alert, Button, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { adminRole, objectNullOrEmpty } from "../../utils/utils";
+import { objectNullOrEmpty } from "../../utils/Utils";
 import { useStyles } from "../../layouts/styles/makeTheme";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { AuthenticationService } from "../../services/access/AuthenticationService";
-import { User } from "../../models/user-interface";
+import { User } from "../../models/UserInterface";
 import { useTranslation } from "react-i18next";
 import { Error } from "@mui/icons-material";
-import { USER_ROLE } from "../../utils/enum/comonEnum";
+import { USER_ROLE } from "../../utils/enum/CommonEnum";
 
 export function UserAccount() {
   const classes = useStyles();
   const { t } = useTranslation(['profile', 'account']);
   const [openPopupModal, setOpenPopupModal] = React.useState<boolean>(false);
   const [currentUser] = useState(AuthenticationService.getCurrentUser());
-  const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm({
+  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm({
     defaultValues: {
       fullName: objectNullOrEmpty(currentUser) ? '' : currentUser.fullName,
       email: objectNullOrEmpty(currentUser) ? '' : currentUser.email,

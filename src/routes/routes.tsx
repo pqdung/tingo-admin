@@ -1,12 +1,12 @@
 import React from "react";
 
-const Home = React.lazy(() => import('../pages/home'));
-const UserManagement = React.lazy(() => import('../pages/user-management/userManagement'));
-const FormExample = React.lazy(() => import('../pages/formExample/formExample'));
-const Profile = React.lazy(() => import('../pages/profile/profile'));
-const Login = React.lazy(() => import('../pages/authen/login'));
-const Signup = React.lazy(() => import('../pages/authen/signup'));
-const ForgotPassword = React.lazy(() => import('../pages/authen/forgotPassword'));
+const Home = React.lazy(() => import('../pages/dashboard/Dashboard'));
+const UserManagement = React.lazy(() => import('../pages/userManagement/UserManagement'));
+const FormExample = React.lazy(() => import('../pages/formExample/FormExample'));
+const Profile = React.lazy(() => import('../pages/profile/Profile'));
+const Login = React.lazy(() => import('../pages/authentication/Login'));
+const Signup = React.lazy(() => import('../pages/authentication/Signup'));
+const ForgotPassword = React.lazy(() => import('../pages/authentication/ForgotPassword'));
 
 const routes = [
   { path: '/', component: Home },

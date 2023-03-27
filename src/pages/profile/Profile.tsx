@@ -1,8 +1,8 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { UserAccount } from "./userAccount";
-import { UserProfile } from "./userProfile";
-import { UserPassword } from "./userPassword";
+import { UserAccount } from "../../components/profile/UserAccount";
+import { UserProfile } from "../../components/profile/UserProfile";
+import { UserPassword } from "../../components/profile/UserPassword";
 import { useTranslation } from "react-i18next";
 
 interface TabPanelProps {
