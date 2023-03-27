@@ -1,7 +1,7 @@
 import DefaultLayout from "../layouts/Layout";
 import { routes, accountRoutes } from "./routes";
 import { Routes, Route } from "react-router-dom";
-import { AuthenticationService } from "../services/access/AuthenticationService";
+import { AuthenticationService } from "../services/access/authenticationService";
 
 function ContainerRouter() {
   return (

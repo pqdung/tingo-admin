@@ -1,13 +1,13 @@
 import { Alert, Button, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { objectNullOrEmpty } from "../../utils/Utils";
+import { objectNullOrEmpty } from "../../utils/utils";
 import { useStyles } from "../../layouts/styles/makeTheme";
 import { useForm } from "react-hook-form";
-import { AuthenticationService } from "../../services/access/AuthenticationService";
-import { User } from "../../models/UserInterface";
+import { AuthenticationService } from "../../services/access/authenticationService";
+import { User } from "../../models/userInterface";
 import { useTranslation } from "react-i18next";
 import { Error } from "@mui/icons-material";
-import { USER_ROLE } from "../../utils/enum/CommonEnum";
+import { USER_ROLE } from "../../utils/enum/commonEnum";
 
 export function UserAccount() {
   const classes = useStyles();

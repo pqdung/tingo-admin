@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
-import { AuthenticationService } from "../../services/access/AuthenticationService";
+import { AuthenticationService } from "../../services/access/authenticationService";
 import { Settings } from "@mui/icons-material";
 import UserManageSetting from "./UserManageSetting";
-import { PREFIX_LOCALE, USER_ROLE } from "../../utils/enum/CommonEnum";
+import { PREFIX_LOCALE, USER_ROLE } from "../../utils/enum/commonEnum";
 import MaterialReactTable, { MRT_Row } from "material-react-table";
-import { stringNullOrEmpty } from "../../utils/Utils";
+import { stringNullOrEmpty } from "../../utils/utils";
 import i18n from "i18next";
 
 import { MRT_Localization_EN } from 'material-react-table/locales/en';

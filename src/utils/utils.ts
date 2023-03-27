@@ -1,5 +1,5 @@
-import { AuthenticationService } from "../services/access/AuthenticationService";
-import { USER_ROLE } from "./enum/CommonEnum";
+import { AuthenticationService } from "../services/access/authenticationService";
+import { USER_ROLE } from "./enum/commonEnum";
 
 export const onChange = (setValues: any, values: Object, event: any) => {
   const value = event.target.value;

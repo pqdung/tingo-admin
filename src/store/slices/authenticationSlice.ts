@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 // import { authentication } from '../../adapters/keycloak-adapter';
-import { loginForm } from '../../models/UserInterface';
+import { loginForm } from '../../models/userInterface';
 
 type AuthState = {
   token: string | null;

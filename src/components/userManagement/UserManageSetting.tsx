@@ -11,10 +11,10 @@ import {
   Typography
 } from "@mui/material";
 import { useStyles } from "../../layouts/styles/makeTheme";
-import { USER_ROLE } from "../../utils/enum/CommonEnum";
+import { USER_ROLE } from "../../utils/enum/commonEnum";
 import React, { useEffect, useState } from "react";
-import { adminRole, objectNullOrEmpty } from "../../utils/Utils";
-import { AuthenticationService } from "../../services/access/AuthenticationService";
+import { adminRole, objectNullOrEmpty } from "../../utils/utils";
+import { AuthenticationService } from "../../services/access/authenticationService";
 import { useTranslation } from "react-i18next";
 
 const _ = require('lodash');

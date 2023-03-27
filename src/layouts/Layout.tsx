@@ -23,9 +23,9 @@ import {
   Person,
   Settings
 } from "@mui/icons-material";
-import { AuthenticationService } from "../services/access/AuthenticationService";
-import { objectNullOrEmpty, userRole, viewPermission } from "../utils/Utils";
-import { User } from "../models/UserInterface";
+import { AuthenticationService } from "../services/access/authenticationService";
+import { objectNullOrEmpty, userRole, viewPermission } from "../utils/utils";
+import { User } from "../models/userInterface";
 import { useEffect, useState } from "react";
 import TLoading from "../components/common/TLoading";
 import { useTranslation } from "react-i18next";

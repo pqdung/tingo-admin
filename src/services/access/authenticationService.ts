@@ -1,5 +1,5 @@
-import { objectNullOrEmpty, stringNullOrEmpty } from "../../utils/Utils";
-import { User } from "../../models/UserInterface";
+import { objectNullOrEmpty, stringNullOrEmpty } from "../../utils/utils";
+import { User } from "../../models/userInterface";
 import lstUserJSON from '../../fakeData/user.json';
 
 //use isLogin set login status in order to use list user in local storage (in demo project)
