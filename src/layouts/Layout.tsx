@@ -27,7 +27,6 @@ import { AuthenticationService } from "../services/access/authenticationService"
 import { objectNullOrEmpty, userRole, viewPermission } from "../utils/utils";
 import { User } from "../models/userInterface";
 import { useEffect, useState } from "react";
-import TLoading from "../components/common/TLoading";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import enLocale from '../assets/images/enLocale.png';
@@ -35,6 +34,8 @@ import zhLocale from '../assets/images/zhLocale.png';
 import { useNavigate } from "react-router-dom";
 import ContainerRouter from "../routes/ContainerRouter";
 import { privateRoutes } from "../routes/routes";
+import { useAppDispatch } from "../store/store";
+import { openLoading } from "../store/slices/loadingSlice";
 
 const drawerWidth = 240;
 
@@ -125,7 +126,6 @@ export default function Layout() {
   const { t } = useTranslation(['common']);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [anchorElLocale, setAnchorElLocale] = React.useState<null | HTMLElement>(null);
   const openUserMenu = Boolean(anchorElUser);
@@ -133,6 +133,7 @@ export default function Layout() {
   const [currentLocate, setCurrentLocate] = useState<any>({});
   const [lstLocateChange, setLstLocateChange] = useState<object[]>([]);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (i18n.language) {
@@ -168,13 +169,15 @@ export default function Layout() {
     setAnchorElLocale(null);
   };
 
+  const delay = (ms: number | undefined) => new Promise(res => setTimeout(res, ms));
   const handleLogout = async () => {
     setAnchorElUser(null);
-    setLoading(true);
+    dispatch(openLoading(true));
+    await delay(500);
     AuthenticationService.logout();
     // window.location.href = '/';
     navigate('/login', { replace: true });
-    setLoading(false);
+    dispatch(openLoading(false));
   };
 
   const genCurrentUserName = () => {
@@ -190,7 +193,9 @@ export default function Layout() {
   }
 
   const onNavigateToPage = (path: string) => {
+    dispatch(openLoading(true));
     navigate(path, { replace: true });
+    dispatch(openLoading(false));
   };
 
   const genSidebarItem = (item: string, path: string, icon: any) => {
@@ -349,7 +354,6 @@ export default function Layout() {
           <ContainerRouter children={privateRoutes} isPrivate/>
         </Suspense>
       </Box>
-      <TLoading open={loading}/>
     </Box>
   );
 }

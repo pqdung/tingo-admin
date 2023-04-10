@@ -4,7 +4,6 @@ import { Box, Button, FormControl, Grid, MenuItem, Select, TextField, Typography
 import { useEffect, useState } from "react";
 import { objectNullOrEmpty } from "../../utils/utils";
 import { AuthenticationService } from "../../services/access/authenticationService";
-import TLoading from "../../components/common/TLoading";
 import { useForm } from "react-hook-form";
 import loginLogo from '../../assets/images/loginLogo.svg';
 import { NavLink, useNavigate } from "react-router-dom";
@@ -13,6 +12,8 @@ import { useTranslation } from "react-i18next";
 import enLocale from "../../assets/images/enLocale.png";
 import zhLocale from "../../assets/images/zhLocale.png";
 import { Error } from "@mui/icons-material";
+import { useAppDispatch } from "../../store/store";
+import { openLoading } from "../../store/slices/loadingSlice";
 
 const lstLocale = [
   {
@@ -31,8 +32,8 @@ export default function Login() {
   const classes = useStyles();
   const { t } = useTranslation(['account']);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [errorLogin, setErrorLogin] = useState<any>({});
-  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       username: '',
@@ -55,7 +56,7 @@ export default function Login() {
   }
 
   const onHandleLogin = async (data: any) => {
-    setLoading(true);
+    dispatch(openLoading(true));
     try {
       // await dispatch(loginKeyCloakAsync(form));
       await AuthenticationService.login(data.username, data.password);
@@ -67,9 +68,9 @@ export default function Login() {
         errorLogin.isLogin = false;
         setErrorLogin(errorLogin);
       }
-      setLoading(false);
+      dispatch(openLoading(false));
     } catch (e) {
-      setLoading(false);
+      dispatch(openLoading(false));
     }
   };
 
@@ -167,7 +168,6 @@ export default function Login() {
           </Grid>
         </Grid>
       </form>
-      <TLoading open={loading}/>
     </Box>
   );
 }

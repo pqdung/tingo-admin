@@ -1,5 +1,11 @@
 import { AuthenticationService } from "../services/access/authenticationService";
 import { USER_ROLE } from "./enum/commonEnum";
+import jwtDecode from 'jwt-decode';
+import { TokenInfo } from "../models/tokenInfo";
+
+export const getDecodedAccessToken = (accessToken: string) => {
+  return jwtDecode<TokenInfo>(accessToken);
+};
 
 export const onChange = (setValues: any, values: Object, event: any) => {
   const value = event.target.value;

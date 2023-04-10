@@ -18,3 +18,13 @@ export enum PREFIX_LOCALE {
   EN = 'en',
   ZH = 'zh',
 }
+
+export enum ERROR_CODE {
+  TIME_OUT = 'timeout',
+  NOT_AUTHORIZE = 'authentication.notAuthorize',
+}
+
+export enum ContentType {
+  JSON = 'application/json',
+  MULTIPART = 'multipart/form-data',
+}

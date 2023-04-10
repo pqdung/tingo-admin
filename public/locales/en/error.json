@@ -1,0 +1,5 @@
+{
+  "default": "Unable to connect to the system at this time.\nPlease try again.",
+  "timeout": "Unable to connect to the system at the specified time.",
+  "ECONNABORTED": "Unable to connect to the system at the specified time."
+}
