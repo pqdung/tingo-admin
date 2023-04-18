@@ -1,5 +1,18 @@
 {
   "window.zoomLevel": 0,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.guides.bracketPairs": true,
+  "editor.lineHeight": 1.2,
+  "editor.tabSize": 2,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.suggestSelection": "first",
+  "explorer.confirmDragAndDrop": false,
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
+  },
+  "html.format.wrapAttributes": "force-aligned",
+  "prettier.singleQuote": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
   "editor.formatOnSave": true
 }
