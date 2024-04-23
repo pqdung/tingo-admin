@@ -101,7 +101,7 @@ export const data: Employee[] = [
     commissionAmount: 2553,
   },
   {
-    firstName: 'Hassie',
+    firstName: 'Hassiee',
     lastName: 'Bruen',
     email: 'Clair76@gmail.com',
     typeTransaction: 'international',
